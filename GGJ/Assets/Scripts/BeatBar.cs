@@ -17,6 +17,10 @@ public class BeatBar : MonoBehaviour
     [Tooltip("移动的时间条（TimeBar）")]
     [SerializeField] private RectTransform timeBar;
 
+    [Tooltip("锅盖管理器")]
+    [SerializeField] private PotManager potManager;
+
+
     [Tooltip("每一拍的时间完美程度反馈")]
     [SerializeField] private TextMeshProUGUI eviation;
 
@@ -26,13 +30,6 @@ public class BeatBar : MonoBehaviour
     
     [Tooltip("Board容纳的节拍数")]
     [SerializeField] private int beatsPerBar = 4;
-
-    [Header("节拍分隔线")]
-    [Tooltip("节拍分隔线Prefab")]
-    [SerializeField] private GameObject beatLinePrefab;
-    
-    [Tooltip("是否显示节拍分隔线")]
-    [SerializeField] private bool showBeatLines = true;
 
     [Header("玩家输入判定")]
     [Tooltip("Perfect判定阈值（毫秒）")]
@@ -84,13 +81,11 @@ public class BeatBar : MonoBehaviour
     private double gameStartTime;       // 游戏真正开始的时间（包含offset）
     private double pauseTime;           // 暂停时的DSP时间
     private double pausedDuration;      // 总暂停时长
-    private GameObject beatLinesContainer;  // 分隔线容器
     private bool[] beatTriggered;       // 记录每个节拍是否已触发（避免重复触发）
     private bool[] beatJudged;          // 记录每个节拍是否已被判定（避免重复判定）
     private bool[] beatAudioScheduled;  // 记录每个节拍的音频是否已调度
     private double beatInterval;        // 每个节拍的时间间隔（秒）
     private const double BEAT_TRIGGER_THRESHOLD = 0.02; // 节拍触发阈值（20毫秒容差）
-    private IntervalBar[] intervalBars; // 每个节拍对应的IntervalBar组件
 
 
     private void Start()
@@ -139,6 +134,9 @@ public class BeatBar : MonoBehaviour
         
         // 检测玩家输入 - 只在游戏正式开始后才接受输入
         CheckLetterInput();
+        
+        // 实时检查是否有错过的按键
+        CheckMissedBeats();
     }
 
     /// <summary>
@@ -162,16 +160,54 @@ public class BeatBar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 实时检查是否有错过的按键
+    /// </summary>
+    private void CheckMissedBeats()
+    {
+        if (levelBlackBoard == null)
+            return;
+
+        // 获取当前回合需要玩家按的节拍列表
+        int[] playerBeats = levelBlackBoard.GetPlayerBeats(roundIndex);
+        
+        if (playerBeats == null || playerBeats.Length == 0)
+            return;
+
+        // 获取当前时间和经过时间
+        double currentTime = AudioSettings.dspTime;
+        double elapsedTime = currentTime - cycleStartTime;
+
+        // 遍历需要按的节拍
+        foreach (int beatIndex in playerBeats)
+        {
+            // 如果该节拍已经被判定过，跳过
+            if (beatJudged[beatIndex])
+                continue;
+
+            // 计算该节拍的目标时间
+            double targetBeatTime = beatIndex * beatInterval;
+            
+            // 计算超过目标时间多久了
+            double timePassed = elapsedTime - targetBeatTime;
+            
+            // 如果超过了判定窗口（Good阈值），标记为Miss
+            double goodThresholdSec = goodThresholdMs / 1000.0;
+            if (timePassed > goodThresholdSec)
+            {
+                // 标记为超时Miss
+                JudgementResult missResult = new JudgementResult(JudgementLevel.Miss, beatIndex, goodThresholdMs / 1000.0, "");
+                ProcessJudgement(missResult);
+            }
+        }
+    }
+
     #region 初始化阶段
     /// <summary>
     /// 初始化
     /// </summary>
     private void Initialize()
     {
-        //加载当前stage数据
-        List<StageData> stages = DataLoader.LoadStageData(LevelBlackBoard.CurrentLevelID);
-        List<EventData> events = DataLoader.LoadEventData();
-        List<ConstantData> constants = DataLoader.LoadConstantData();
         if (left == null || right == null || timeBar == null || roundController == null)
         {
             return;
@@ -191,13 +227,11 @@ public class BeatBar : MonoBehaviour
         // 设置初始位置
         ResetPosition();
         roundController.SetRound(roundIndex);
-        
-        // 生成节拍分隔线
-        if (showBeatLines && beatLinePrefab != null)
-        {
-            GenerateBeatLines();
-        }
-        
+
+        //重置锅盖
+        UpdatePotDisplay();
+
+
     }
 
     /// <summary>
@@ -262,8 +296,8 @@ public class BeatBar : MonoBehaviour
         // 音频延迟补偿（秒）
         double audioLatencySeconds = audioLatencyMs / 1000.0;
         
-        // 只检查分隔线位置（1到beatsPerBar-1）
-        for (int beatIndex = 1; beatIndex < beatsPerBar; beatIndex++)
+        // 检查所有节拍位置（0到beatsPerBar-1）
+        for (int beatIndex = 0; beatIndex < beatsPerBar; beatIndex++)
         {
             // 计算这个节拍应该出现的精确时间
             double targetBeatTime = beatIndex * beatInterval;
@@ -351,29 +385,43 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     private void OnCycleComplete()
     {
+        //需要判断游戏是否结束,这是不是最后一个拍
+
         roundIndex++;
         roundController.SetRound(roundIndex);
         
         // 重置所有节拍状态（包括音频调度）
         ResetBeatTriggers();
         
-        // 重置所有IntervalBar的显示
-        ResetIntervalBars();
+        // 更新锅盖显示
+        UpdatePotDisplay();
     }
 
     /// <summary>
-    /// 重置所有IntervalBar的显示
+    /// 更新锅盖显示
     /// </summary>
-    private void ResetIntervalBars()
+    private void UpdatePotDisplay()
     {
-        if (intervalBars != null)
+        if (levelBlackBoard == null || potManager == null)
         {
-            for (int i = 0; i < intervalBars.Length; i++)
+            return;
+        }
+
+        // 获取当前回合的 PlayerBeat 数组
+        int[] playerBeats = levelBlackBoard.GetPlayerBeats(roundIndex);
+
+        // 先隐藏所有锅盖（1-7）
+        for (int i = 1; i <= 7; i++)
+        {
+            potManager.ShowPot(i);
+        }
+
+        // 如果有 PlayerBeat 数据，显示对应的锅盖
+        if (playerBeats != null && playerBeats.Length > 0)
+        {
+            foreach (int beatIndex in playerBeats)
             {
-                if (intervalBars[i] != null)
-                {
-                    intervalBars[i].SetCapital("");
-                }
+                potManager.HidePot(beatIndex);
             }
         }
     }
@@ -395,24 +443,19 @@ public class BeatBar : MonoBehaviour
         double deviationMs = deviation * 1000;
         Debug.Log($"节拍命中: Beat {beatIndex}/{beatsPerBar}, Round {roundIndex}, 偏差: {deviationMs:F2}ms, DSP时间: {AudioSettings.dspTime:F4}");
         
-        // 检查是否超时Miss
-        CheckBeatMiss(beatIndex);
-    }
-
-    /// <summary>
-    /// 检查节拍是否Miss（超过可输入范围还未被判定）
-    /// </summary>
-    private void CheckBeatMiss(int beatIndex)
-    {
-        if (beatIndex > 0 && beatIndex < beatsPerBar)
+        // 显示箭头位置
+        if (potManager != null)
         {
-            // 检查上一个节拍是否已判定
-            int previousBeat = beatIndex - 1;
-            if (previousBeat > 0 && !beatJudged[previousBeat])
+            // 判断节拍索引是否在1-7范围内
+            if (beatIndex >= 1 && beatIndex <= 7)
             {
-                // 上一个节拍超时未判定，标记为Miss
-                JudgementResult missResult = new JudgementResult(JudgementLevel.Miss, previousBeat, goodThresholdMs / 1000.0, "");
-                ProcessJudgement(missResult);
+                // 显示箭头在对应锅盖位置
+                potManager.ShowArrowInIndex(beatIndex);
+            }
+            else
+            {
+                // 显示箭头在默认位置
+                potManager.ShowArrowAtDefaultPosition();
             }
         }
     }
@@ -434,8 +477,8 @@ public class BeatBar : MonoBehaviour
         int nearestBeat = -1;
         double nearestDeviation = double.MaxValue;
 
-        // 只检查分隔线位置（1到beatsPerBar-1）
-        for (int beatIndex = 1; beatIndex < beatsPerBar; beatIndex++)
+        // 检查所有节拍位置（0到beatsPerBar-1）
+        for (int beatIndex = 0; beatIndex < beatsPerBar; beatIndex++)
         {
             // 如果这个节拍已被判定，跳过
             if (beatJudged[beatIndex])
@@ -460,17 +503,6 @@ public class BeatBar : MonoBehaviour
         // 如果找到了可判定的节拍
         if (nearestBeat != -1 && canPress)
         {
-            // 调用对应IntervalBar的SetCapital函数
-            if (intervalBars != null && nearestBeat < intervalBars.Length && intervalBars[nearestBeat] != null)
-            {
-                intervalBars[nearestBeat].SetCapital(letter);
-                Debug.Log($"设置IntervalBar[{nearestBeat}]的字母为: {letter}");
-            }
-            else
-            {
-                Debug.LogWarning($"无法设置IntervalBar[{nearestBeat}]: intervalBars={intervalBars != null}, 长度={intervalBars?.Length}, 组件={intervalBars?[nearestBeat] != null}");
-            }
-            
             // 判定等级
             JudgementLevel level = CalculateJudgementLevel(System.Math.Abs(nearestDeviation));
             
@@ -508,11 +540,17 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     private void ProcessJudgement(JudgementResult result)
     {
+        // 检查是否已经被判定过
+        if (beatJudged[result.BeatIndex])
+        {
+            Debug.LogWarning($"节拍 {result.BeatIndex} 已经被判定过了，跳过重复判定！");
+            return;
+        }
         
-
+        
         // 标记该节拍已被判定
         beatJudged[result.BeatIndex] = true;
-
+        
         // 更新偏差显示（Miss不更新）
         if (result.Level != JudgementLevel.Miss && eviation != null)
         {
@@ -537,10 +575,12 @@ public class BeatBar : MonoBehaviour
         {
             Debug.LogWarning("eviation UI组件为null，无法更新偏差显示！");
         }
-
+        
+        Debug.Log($"触发判定事件: BeatIndex={result.BeatIndex}, Level={result.Level}, Key={result.InputKey}");
+        
         // 触发判定事件
         EventCenter.Instance.EventTrigger(GameEvents.OnPlayerJudgement, result);
-
+        
         // 日志输出
         string keyInfo = string.IsNullOrEmpty(result.InputKey) ? "Miss" : $"Key: {result.InputKey}";
     }
@@ -680,9 +720,6 @@ public class BeatBar : MonoBehaviour
             roundController.SetRound(roundIndex);
         }
         
-        // 重置所有IntervalBar显示
-        ResetIntervalBars();
-        
         // 重置所有节拍状态
         ResetBeatTriggers();
         
@@ -776,109 +813,6 @@ public class BeatBar : MonoBehaviour
 
     #endregion
 
-    #region 节拍分隔线
-
-    /// <summary>
-    /// 生成节拍分隔线
-    /// </summary>
-    private void GenerateBeatLines()
-    {
-        // 清除旧的分隔线
-        ClearBeatLines();
-        
-        // 确保intervalBars数组已初始化
-        if (intervalBars == null || intervalBars.Length != beatsPerBar)
-        {
-            intervalBars = new IntervalBar[beatsPerBar];
-        }
-
-        // 创建容器
-        beatLinesContainer = new GameObject("BeatLines");
-        beatLinesContainer.transform.SetParent(transform);
-
-        // 获取TimeBar的Y轴位置
-        float yPos = timeBar.position.y;
-
-        // 在整数拍位置生成分隔线：1, 2, 3...
-        for (int i = 1; i < beatsPerBar; i++)
-        {
-            float progress = (float)i / beatsPerBar;
-            CreateBeatLine(progress, yPos, i);
-        }
-
-        Debug.Log($"生成了{beatsPerBar - 1}条节拍分隔线");
-    }
-
-    /// <summary>
-    /// 创建单个节拍分隔线
-    /// </summary>
-    private void CreateBeatLine(float progress, float yPos, int beatIndex)
-    {
-        // 实例化分隔线
-        GameObject line = Instantiate(beatLinePrefab, beatLinesContainer.transform);
-        
-        // 计算X位置
-        float xPos = Mathf.Lerp(startX, endX, progress);
-        
-        // 设置位置
-        line.transform.position = new Vector3(xPos, yPos, line.transform.position.z);
-        
-        // 设置名称
-        line.name = $"BeatLine_{beatIndex}";
-        
-        // 获取并保存IntervalBar组件
-        IntervalBar intervalBar = line.GetComponent<IntervalBar>();
-        if (intervalBar != null)
-        {
-            intervalBars[beatIndex] = intervalBar;
-        }
-        else
-        {
-            Debug.LogWarning($"BeatLine_{beatIndex} 没有找到 IntervalBar 组件！");
-        }
-    }
-
-    /// <summary>
-    /// 清除节拍分隔线
-    /// </summary>
-    private void ClearBeatLines()
-    {
-        if (beatLinesContainer != null)
-        {
-            if (Application.isPlaying)
-            {
-                Destroy(beatLinesContainer);
-            }
-            else
-            {
-                DestroyImmediate(beatLinesContainer);
-            }
-            beatLinesContainer = null;
-        }
-        
-        // 清除IntervalBar引用
-        if (intervalBars != null)
-        {
-            for (int i = 0; i < intervalBars.Length; i++)
-            {
-                intervalBars[i] = null;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 重新生成节拍分隔线（可在运行时调用）
-    /// </summary>
-    public void RegenerateBeatLines()
-    {
-        if (showBeatLines && beatLinePrefab != null && left != null && right != null && timeBar != null)
-        {
-            GenerateBeatLines();
-        }
-    }
-
-    #endregion
-
     #region Inspector验证
 
     private void OnValidate()
@@ -896,12 +830,6 @@ public class BeatBar : MonoBehaviour
             distance = Mathf.Abs(endX - startX);
             
             CalculateSpeed();
-            
-            // 如果显示分隔线，重新生成
-            if (showBeatLines && beatLinePrefab != null)
-            {
-                RegenerateBeatLines();
-            }
         }
     }
 

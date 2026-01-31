@@ -63,4 +63,28 @@ public class LevelBlackBoard : MonoBehaviour
 
         return false;
     }
+
+    /// <summary>
+    /// 获取指定回合的 PlayerBeat 数组
+    /// </summary>
+    /// <param name="roundIndex">回合索引（从1开始）</param>
+    /// <returns>PlayerBeat 数组，如果没有则返回 null</returns>
+    public int[] GetPlayerBeats(int roundIndex)
+    {
+        int sectionIndex = roundIndex - 1;
+        
+        if (sectionIndex < 0 || sectionIndex >= stages.Count)
+        {
+            return null;
+        }
+        
+        StageData currentStage = stages[sectionIndex];
+        
+        if (currentStage.PlayerBeat == null || currentStage.PlayerBeat.Length == 0)
+        {
+            return null;
+        }
+        
+        return currentStage.PlayerBeat;
+    }
 }

@@ -35,7 +35,7 @@ public class RoundController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"RoundController: TextMeshProUGUI组件未初始化，无法设置Round:{roundCount}");
+           
         }
     }
 }
