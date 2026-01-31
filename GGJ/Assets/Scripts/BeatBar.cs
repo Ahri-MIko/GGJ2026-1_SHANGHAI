@@ -354,7 +354,9 @@ public class BeatBar : MonoBehaviour
         roundIndex++;
         roundController.SetRound(roundIndex);
         
-        //需要根据配表显示玩家需要特殊显示
+        // 重置所有节拍状态（包括音频调度）
+        ResetBeatTriggers();
+        
         // 重置所有IntervalBar的显示
         ResetIntervalBars();
     }
