@@ -19,5 +19,5 @@ MonoBehaviour:
     loop: 1
   soundEffectList:
   - soundName: Press
-    clip: {fileID: 8300000, guid: c27cbf1ba5f252c4db9e2853238ec163, type: 3}
+    clip: {fileID: 8300000, guid: 14202d6513495944f888f04436ce4866, type: 3}
     volume: 1

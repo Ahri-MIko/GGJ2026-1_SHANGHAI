@@ -44,6 +44,9 @@ public class BeatBar : MonoBehaviour
     [Tooltip("Good判定阈值（毫秒）")]
     [SerializeField] private float goodThresholdMs = 120f;
     
+    [Header("音频设置")]
+    [Tooltip("音频延迟补偿（毫秒）- 提前多少ms播放音效")]
+    [SerializeField] private float audioLatencyMs = 250f;
 
     [Header("运行时信息")]
     [Tooltip("游戏开始前的延迟时间（秒）")]
@@ -84,6 +87,7 @@ public class BeatBar : MonoBehaviour
     private GameObject beatLinesContainer;  // 分隔线容器
     private bool[] beatTriggered;       // 记录每个节拍是否已触发（避免重复触发）
     private bool[] beatJudged;          // 记录每个节拍是否已被判定（避免重复判定）
+    private bool[] beatAudioScheduled;  // 记录每个节拍的音频是否已调度
     private double beatInterval;        // 每个节拍的时间间隔（秒）
     private const double BEAT_TRIGGER_THRESHOLD = 0.02; // 节拍触发阈值（20毫秒容差）
     private IntervalBar[] intervalBars; // 每个节拍对应的IntervalBar组件
@@ -214,6 +218,7 @@ public class BeatBar : MonoBehaviour
         // 初始化节拍触发数组和判定数组
         beatTriggered = new bool[beatsPerBar];
         beatJudged = new bool[beatsPerBar];
+        beatAudioScheduled = new bool[beatsPerBar];
     }
 
     /// <summary>
@@ -254,16 +259,31 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     private void CheckAndTriggerBeats(double elapsedTime)
     {
+        // 音频延迟补偿（秒）
+        double audioLatencySeconds = audioLatencyMs / 1000.0;
+        
         // 只检查分隔线位置（1到beatsPerBar-1）
         for (int beatIndex = 1; beatIndex < beatsPerBar; beatIndex++)
         {
+            // 计算这个节拍应该出现的精确时间
+            double targetBeatTime = beatIndex * beatInterval;
+            
+            // 提前播放音效
+            if (!beatAudioScheduled[beatIndex] && elapsedTime >= targetBeatTime - audioLatencySeconds)
+            {
+                if (levelBlackBoard != null)
+                {
+                    if (levelBlackBoard.isPlayerBeat(roundIndex, beatIndex))
+                    {
+                        beatAudioScheduled[beatIndex] = true;
+                        AudioManager.Instance.PlaySound("Press");
+                    }
+                }
+            }
+            
             // 如果这个节拍已经触发过，跳过
             if (beatTriggered[beatIndex])
                 continue;
-
-            // 计算这个节拍应该出现的精确时间
-            double targetBeatTime = beatIndex * beatInterval;
-
 
             // 检查当前时间是否到达或超过目标时间（带容差）
             if (elapsedTime >= targetBeatTime - BEAT_TRIGGER_THRESHOLD)
@@ -271,11 +291,6 @@ public class BeatBar : MonoBehaviour
                 // 标记为已触发
                 beatTriggered[beatIndex] = true;
 
-                //检查是否为音效节点,如果是的话就播放音效
-                if (levelBlackBoard.isPlayerBeat(roundIndex, beatIndex))
-                {
-                    AudioManager.Instance.PlaySound("Press");
-                }
                 // 触发节拍事件
                 OnBeatHit(beatIndex, elapsedTime - targetBeatTime);
             }
@@ -300,6 +315,14 @@ public class BeatBar : MonoBehaviour
             for (int i = 0; i < beatJudged.Length; i++)
             {
                 beatJudged[i] = false;
+            }
+        }
+        
+        if (beatAudioScheduled != null)
+        {
+            for (int i = 0; i < beatAudioScheduled.Length; i++)
+            {
+                beatAudioScheduled[i] = false;
             }
         }
     }
@@ -331,6 +354,7 @@ public class BeatBar : MonoBehaviour
         roundIndex++;
         roundController.SetRound(roundIndex);
         
+        //需要根据配表显示玩家需要特殊显示
         // 重置所有IntervalBar的显示
         ResetIntervalBars();
     }
@@ -428,9 +452,11 @@ public class BeatBar : MonoBehaviour
                 nearestDeviation = deviation;
             }
         }
+        bool canPress = false;
+        canPress = levelBlackBoard.isPlayerBeat(roundIndex, nearestBeat);
 
         // 如果找到了可判定的节拍
-        if (nearestBeat != -1)
+        if (nearestBeat != -1 && canPress)
         {
             // 调用对应IntervalBar的SetCapital函数
             if (intervalBars != null && nearestBeat < intervalBars.Length && intervalBars[nearestBeat] != null)
@@ -480,6 +506,8 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     private void ProcessJudgement(JudgementResult result)
     {
+        
+
         // 标记该节拍已被判定
         beatJudged[result.BeatIndex] = true;
 
