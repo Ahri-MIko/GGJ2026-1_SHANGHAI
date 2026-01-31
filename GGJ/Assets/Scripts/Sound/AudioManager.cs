@@ -38,8 +38,6 @@ public class AudioManager : SingletonMono<AudioManager>
         base.Awake();
         InitializeAudioSources();
         BuildDictionaries();
-        PlayBGM("Level1");
-        
     }
 
     /// <summary>

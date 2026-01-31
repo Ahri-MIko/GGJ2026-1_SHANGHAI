@@ -65,6 +65,8 @@ public class BeatBar : MonoBehaviour
     [Tooltip("QTE 触发按键序列（共3个）")]
     [SerializeField] private KeyCode[] validKeys = new KeyCode[3];
 
+    [Tooltip("关卡数据管理器")]
+    [SerializeField] private LevelBlackBoard levelBlackBoard;
 
     List<StageData> stages = new List<StageData>();
     List<EventData> events = new List<EventData>();
@@ -267,7 +269,10 @@ public class BeatBar : MonoBehaviour
             {
                 // 标记为已触发
                 beatTriggered[beatIndex] = true;
-                
+
+                //检查是否为音效节点,如果是的话就播放音效
+                string soundclipname = levelBlackBoard.isEnemyScream(roundIndex, beatIndex);
+                if(soundclipname != null) { AudioManager.Instance.PlaySound(soundclipname); }
                 // 触发节拍事件
                 OnBeatHit(beatIndex, elapsedTime - targetBeatTime);
             }

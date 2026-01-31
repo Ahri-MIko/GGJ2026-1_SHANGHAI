@@ -18,6 +18,9 @@ MonoBehaviour:
     volume: 1
     loop: 1
   soundEffectList:
-  - soundName: 
-    clip: {fileID: 0}
+  - soundName: boss_4
+    clip: {fileID: 8300000, guid: dba25ba08a3f7ac4f94b7fafd7757e98, type: 3}
+    volume: 1
+  - soundName: boss_6
+    clip: {fileID: 8300000, guid: 6098a999b15cc7e43bb6f7c75b71df6b, type: 3}
     volume: 1

@@ -1176,6 +1176,7 @@ MonoBehaviour:
   isInPreparation: 0
   roundController: {fileID: 1030539808}
   validKeys: 710000002000000065000000
+  levelBlackBoard: {fileID: 959391256}
 --- !u!1 &1635583469
 GameObject:
   m_ObjectHideFlags: 0
