@@ -1163,19 +1163,19 @@ MonoBehaviour:
   right: {fileID: 1159650577}
   timeBar: {fileID: 550196041}
   eviation: {fileID: 873439019}
-  bpm: 120
+  bpm: 240
   beatsPerBar: 8
   beatLinePrefab: {fileID: 8517423384274960225, guid: 8c9634c4a01b16d47bd8f76f7a712d6a, type: 3}
   showBeatLines: 1
   perfectThresholdMs: 60
   greatThresholdMs: 80
   goodThresholdMs: 120
-  startOffset: 2
+  startOffset: 0
   autoStart: 1
   isPlaying: 0
   isInPreparation: 0
   roundController: {fileID: 1030539808}
-  validKeys: 710000002000000065000000
+  validKeys: 710000007700000065000000
   levelBlackBoard: {fileID: 959391256}
 --- !u!1 &1635583469
 GameObject:

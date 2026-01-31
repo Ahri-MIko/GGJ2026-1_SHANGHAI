@@ -275,6 +275,39 @@ public class AudioManager : SingletonMono<AudioManager>
     }
 
     /// <summary>
+    /// 精确时间播放音效（用于音游，使用DSP时间调度）
+    /// </summary>
+    /// <param name="soundName">音效名称</param>
+    /// <param name="dspTime">DSP时间（使用AudioSettings.dspTime）</param>
+    public void PlaySoundScheduled(string soundName, double dspTime)
+    {
+        if (sfxDictionary == null || !sfxDictionary.ContainsKey(soundName))
+        {
+            Debug.LogWarning($"AudioManager: 找不到音效 - {soundName}");
+            return;
+        }
+
+        SoundEffectData sfxData = sfxDictionary[soundName];
+        
+        // Create a temporary AudioSource for scheduled playback
+        GameObject tempObj = new GameObject($"SFX_{soundName}");
+        tempObj.transform.SetParent(transform);
+        AudioSource tempSource = tempObj.AddComponent<AudioSource>();
+        
+        tempSource.clip = sfxData.clip;
+        tempSource.volume = sfxData.volume * sfxMasterVolume;
+        tempSource.playOnAwake = false;
+        
+        // Schedule the sound to play at exact DSP time
+        tempSource.PlayScheduled(dspTime);
+        
+        // Destroy the temporary object after the clip finishes
+        Destroy(tempObj, sfxData.clip.length + 0.1f);
+        
+        Debug.Log($"Scheduled sound: {soundName} at DSP time {dspTime:F4}");
+    }
+
+    /// <summary>
     /// 播放音效（指定AudioClip）
     /// </summary>
     public void PlaySound(AudioClip clip, float volume = 1f)

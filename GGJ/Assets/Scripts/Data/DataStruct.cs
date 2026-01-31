@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 
-// --- 数据模型与包装类 (保持之前的适配方案) ---
+// --- 数据模型 ---
 
+/// <summary>
+/// 辅助类：用于绕过 JsonUtility 不支持二维数组 (int[][]) 的限制
+/// </summary>
 [Serializable]
-public class BuffData
+public class IntArrayWrapper
 {
     public int[] values;
 }
@@ -15,22 +18,23 @@ public class StageData
 {
     public int BarId;
     public int BossAEvent;
-    public int PlayerBeat;
-    public int[] PlayerEvent;
+    public int[] PlayerBeat;  // 类型：int[]
+    public int[] PlayerEvent; // 类型：int[]
+    public string Note;       // 类型：string
 }
 
 [Serializable]
 public class EventData
 {
     public int EventId;
-    public string Detail;
-    public int EventType;
-    public string[] SoundFiles;
-    public int[] SoundBeat;
-    public BuffData[] Buff;
-    public int[] AVariable;
-    public int[] BVariable;
-    public int[] CVariable;
+    public string Note;        // 类型：string
+    public string EventType;   // 类型：string
+    public int[] SoundFile;    // 类型：int[]
+    public IntArrayWrapper[] SoundBeat; // 类型：int[][] (伪装处理)
+    public int Buff;           // 类型：int
+    public int AVariable;      // 类型：int
+    public int BVariable;      // 类型：int
+    public int CVariable;      // 类型：int
 }
 
 [Serializable]
@@ -41,7 +45,8 @@ public class ConstantData
     public string Config;
 }
 
-// JsonUtility 必须使用的包装类
+// --- JsonUtility 包装容器 ---
+
 [Serializable] public class StageList { public List<StageData> items; }
 [Serializable] public class EventList { public List<EventData> items; }
 [Serializable] public class ConstantList { public List<ConstantData> items; }
@@ -50,7 +55,7 @@ public class ConstantData
 
 public static class DataLoader
 {
-    // 辅助工具：包装 JSON 数组
+    // 辅助工具：包装 JSON 数组，使其符合 JsonUtility 的解析要求
     private static string WrapJson(string json) => "{\"items\":" + json + "}";
 
     /// <summary>

@@ -264,6 +264,7 @@ public class BeatBar : MonoBehaviour
             // 计算这个节拍应该出现的精确时间
             double targetBeatTime = beatIndex * beatInterval;
 
+
             // 检查当前时间是否到达或超过目标时间（带容差）
             if (elapsedTime >= targetBeatTime - BEAT_TRIGGER_THRESHOLD)
             {
@@ -271,8 +272,10 @@ public class BeatBar : MonoBehaviour
                 beatTriggered[beatIndex] = true;
 
                 //检查是否为音效节点,如果是的话就播放音效
-                string soundclipname = levelBlackBoard.isEnemyScream(roundIndex, beatIndex);
-                if(soundclipname != null) { AudioManager.Instance.PlaySound(soundclipname); }
+                if (levelBlackBoard.isPlayerBeat(roundIndex, beatIndex))
+                {
+                    AudioManager.Instance.PlaySound("Press");
+                }
                 // 触发节拍事件
                 OnBeatHit(beatIndex, elapsedTime - targetBeatTime);
             }

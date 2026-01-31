@@ -14,13 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmList:
   - bgmName: Level1
-    clip: {fileID: 8300000, guid: f6cd80a98711902438d9de057467bb21, type: 3}
+    clip: {fileID: 8300000, guid: a611866117e467b458bd599175d8b117, type: 3}
     volume: 1
     loop: 1
   soundEffectList:
-  - soundName: boss_4
-    clip: {fileID: 8300000, guid: dba25ba08a3f7ac4f94b7fafd7757e98, type: 3}
-    volume: 1
-  - soundName: boss_6
-    clip: {fileID: 8300000, guid: 6098a999b15cc7e43bb6f7c75b71df6b, type: 3}
+  - soundName: Press
+    clip: {fileID: 8300000, guid: c27cbf1ba5f252c4db9e2853238ec163, type: 3}
     volume: 1

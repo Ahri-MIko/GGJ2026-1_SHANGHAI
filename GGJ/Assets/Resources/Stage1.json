@@ -1,52 +1,394 @@
 [
     {
         "BarId": 1,
-        "BossAEvent": 1001,
-        "PlayerBeat": 5,
-        "PlayerEvent": [
-            2001,
-            2002,
-            2003
-        ]
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
     },
     {
         "BarId": 2,
-        "BossAEvent": 1002,
-        "PlayerBeat": 1,
-        "PlayerEvent": [
-            2001,
-            2002,
-            2003
-        ]
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
     },
     {
         "BarId": 3,
-        "BossAEvent": 1003,
-        "PlayerBeat": 1,
-        "PlayerEvent": [
-            2001,
-            2002,
-            2003
-        ]
+        "BossAEvent": 1001,
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "1 - 咋又一个人回来的"
     },
     {
         "BarId": 4,
-        "BossAEvent": 1004,
-        "PlayerBeat": 1,
-        "PlayerEvent": [
-            2001,
-            2002,
-            2003
-        ]
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
     },
     {
         "BarId": 5,
+        "BossAEvent": 1002,
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "2 - 啥时候找对象啊？"
+    },
+    {
+        "BarId": 6,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 7,
+        "BossAEvent": 1003,
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "3 - 没对象那能好吗？"
+    },
+    {
+        "BarId": 8,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 9,
+        "BossAEvent": 1004,
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "4 - 眼光别太高"
+    },
+    {
+        "BarId": 10,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 11,
         "BossAEvent": 1005,
-        "PlayerBeat": 1,
-        "PlayerEvent": [
-            2001,
-            2002,
-            2003
-        ]
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "5 - 喜欢啥样的呀？"
+    },
+    {
+        "BarId": 12,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 13,
+        "BossAEvent": 1006,
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "6  -楼下内个谁就和你蛮配的"
+    },
+    {
+        "BarId": 14,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 15,
+        "BossAEvent": 1007,
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "7 - 女人过三十"
+    },
+    {
+        "BarId": 16,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 17,
+        "BossAEvent": 1007,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "7 - 就贬值啦！"
+    },
+    {
+        "BarId": 18,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 19,
+        "BossAEvent": 1008,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": "8 - 你高中同学都有娃啦！"
+    },
+    {
+        "BarId": 20,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 21,
+        "BossAEvent": 1009,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "9 - 啥时候结婚，给个准话！"
+    },
+    {
+        "BarId": 22,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            5
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 23,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 24,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 25,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            4
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 26,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 27,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 28,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 29,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 30,
+        "BossAEvent": 1010,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": "10 - 拖到没人要咋办"
+    },
+    {
+        "BarId": 31,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 32,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 33,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 34,
+        "BossAEvent": 1011,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "11 - 连孩子也不要了？"
+    },
+    {
+        "BarId": 35,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 36,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 37,
+        "BossAEvent": 1012,
+        "PlayerBeat": [
+            1,
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": "12 - 什么年纪做什么事！"
+    },
+    {
+        "BarId": 38,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 39,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 40,
+        "BossAEvent": 1013,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": "13 - 老了谁养你啊"
+    },
+    {
+        "BarId": 41,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            5,
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 42,
+        "BossAEvent": 1014,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "14 - 不孝有三，无后为大！"
+    },
+    {
+        "BarId": 43,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 44,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 45,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            7
+        ],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 46,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
     }
 ]

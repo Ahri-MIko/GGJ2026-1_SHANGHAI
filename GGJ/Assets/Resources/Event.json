@@ -1,25 +1,156 @@
 [
     {
         "EventId": 1001,
-        "Detail": "BOSS说XXXXX",
-        "EventType": 1,
-        "SoundFiles": [
-            "boss_4",
-            "boss_6"
-        ],
-        "SoundBeat": [
-            1,
-            5
-        ],
-        "Buff": [],
-        "AVariable": [
-            3
-        ],
-        "BVariable": [
-            5
-        ],
-        "CVariable": [
-            6
-        ]
+        "Note": "1 - 咋又一个人回来的",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1002,
+        "Note": "2 - 啥时候找对象啊？",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1003,
+        "Note": "3 - 没对象那能好吗？",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1004,
+        "Note": "4 - 眼光别太高",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1005,
+        "Note": "5 - 喜欢啥样的呀？",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1006,
+        "Note": "6 - 楼下内个谁就和你蛮配的",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1007,
+        "Note": "7 - 女人过三十，就贬值啦！",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1008,
+        "Note": "8 - 你高中同学都有娃啦！",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1009,
+        "Note": "9 - 啥时候结婚，给个准话！",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1010,
+        "Note": "10 - 拖到没人要咋办",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1011,
+        "Note": "11 - 连孩子也不要了？",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1012,
+        "Note": "12 - 什么年纪做什么事！",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1013,
+        "Note": "13 - 老了谁养你啊",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
+    },
+    {
+        "EventId": 1014,
+        "Note": "14 - 不孝有三，无后为大！",
+        "EventType": "",
+        "SoundFile": [],
+        "SoundBeat": [],
+        "Buff": 0,
+        "AVariable": 0,
+        "BVariable": 0,
+        "CVariable": 0
     }
 ]
