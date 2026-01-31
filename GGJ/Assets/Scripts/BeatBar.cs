@@ -104,7 +104,14 @@ public class BeatBar : MonoBehaviour
         {
             TogglePause();
         }
-        
+
+        // 按R键重新开始
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
+        }
+
+
         // 检查是否还在准备阶段
         if (isInPreparation)
         {
@@ -509,6 +516,7 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        AudioManager.Instance.PlayBGM("Level1");
         double currentTime = AudioSettings.dspTime;
         gameStartTime = currentTime + startOffset;
         cycleStartTime = gameStartTime;
@@ -617,6 +625,40 @@ public class BeatBar : MonoBehaviour
         {
             AudioManager.Instance.StopBGM();
         }
+    }
+
+    /// <summary>
+    /// 重新开始游戏
+    /// </summary>
+    public void Restart()
+    {
+        // 停止当前游戏
+        Stop();
+        
+        // 重置回合数
+        roundIndex = 1;
+        if (roundController != null)
+        {
+            roundController.SetRound(roundIndex);
+        }
+        
+        // 重置所有IntervalBar显示
+        ResetIntervalBars();
+        
+        // 重置所有节拍状态
+        ResetBeatTriggers();
+        
+        // 初始化偏差显示为等待状态
+        if (eviation != null)
+        {
+            eviation.text = "Ready...";
+            eviation.color = Color.white;
+        }
+        
+        Debug.Log("游戏重新开始");
+        
+        // 重新开始游戏（包含offset）
+        StartGame();
     }
 
     /// <summary>
