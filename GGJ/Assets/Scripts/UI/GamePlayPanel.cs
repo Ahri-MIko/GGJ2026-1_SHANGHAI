@@ -1,0 +1,236 @@
+using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+using TMPro;
+using System;
+
+public class GameplayPanel : BasePanel
+{
+    public static GameplayPanel Instance;
+    [Header("Pause")]
+    public Button btnPause;
+
+    [Header("Face Bars (HP)")]
+    public Image bossHpFill;
+    public Image bossHpRedBar;
+    public Image playerFaceFill;
+    public TextMeshProUGUI bossFaceText; // 显示数值，如 "面子: 80%"
+
+    [Header("Mask System")]
+    /*
+    public Image[] maskIcons; // 拖入 Q, W, E, R 的图标 Image
+    public Sprite[] activeSprites; // 激活状态的图（发光）
+    public Sprite[] inactiveSprites; // 灰暗状态的图
+    public Transform activeMaskIndicator; // 一个框框，指示当前选中的是谁
+    */
+    [SerializeField] private Image bossPortrait;
+    [SerializeField] private Transform playerPortrait;
+
+    [Header("Feedback")]
+    [SerializeField] private Transform feedbackSpawnPoint; // 飘字生成点
+    [SerializeField] private GameObject feedbackPrefab;    // 飘字 Prefab
+
+    [Header("Dialogue")]
+    [SerializeField] private TextMeshProUGUI bossDialogueText; // Boss气泡文字
+    [SerializeField] private CanvasGroup bossDialogueGroup;    // 用来控制气泡淡入淡出
+    [SerializeField] private TextMeshProUGUI playerRetortText; // 玩家回怼文字
+    [SerializeField] private CanvasGroup playerDialogueGroup;
+
+    [Header("=== 资源配置 (美术相关) ===")]
+    public Color colorPerfect = Color.red;
+    public Color colorGood = Color.yellow;
+    public Color colorMiss = Color.gray;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Instance = this;
+    }
+    private void Start()
+    {
+        btnPause.onClick.AddListener(OnClickPause);
+    }
+
+    private void OnClickPause()
+    {
+        // 1. 播放按钮点击音效 (如果有 AudioManager)
+        // AudioManager.Instance.Play("UI_Click");
+
+        // 2. 按钮点击反馈 (变小一下)
+        btnPause.transform.DOPunchScale(Vector3.one * -0.1f, 0.1f).OnComplete(() =>
+        {
+            // 3. 通知 UIManager 切换状态
+            // 注意：这里我们只负责通知 UI 变化，具体的“开始游戏逻辑”交给 Manager 协调
+            UIManager.Instance.TogglePausePanel();
+        });
+    }
+
+
+    /// <summary>
+    /// 更新 Boss 面子条
+    /// </summary>
+    /// <param name="percent">0.0 到 1.0 的百分比</param>
+    public void UpdateBossHP(float percent)
+    {
+        // 1. 前景条立刻变（或快速变）
+        bossHpFill.DOFillAmount(percent, 0.2f);
+
+        // 2. 背景缓冲条延迟跟随 (传统的打击感血条)
+        bossHpRedBar.DOFillAmount(percent, 0.5f).SetDelay(0.2f).SetEase(Ease.OutCirc);
+
+        // 3. 立绘受击震动
+        bossPortrait.transform.DOShakePosition(0.3f, 10f);
+        bossPortrait.DOColor(Color.red, 0.1f).OnComplete(() => bossPortrait.DOColor(Color.white, 0.1f));
+    }
+
+    
+    /// <summary>
+    /// 更新玩家 面子条
+    /// </summary>
+    /// <param name="percent">0.0 到 1.0</param>
+    public void UpdatePlayerHP(float percent)
+    {
+        playerFaceFill.DOFillAmount(percent, 0.3f);
+
+        // 如果血量危急，开始闪烁
+        if (percent < 0.2f)
+        {
+            // 简单的心跳效果
+            playerFaceFill.transform.DOScale(1.1f, 0.5f).SetLoops(2, LoopType.Yoyo);
+        }
+    }
+
+    /*
+    // --- 2. 脸谱切换系统 (QWER) ---
+    public void SwitchMaskUI(int index) // index: 0=Q, 1=W, 2=E, 3=R
+    {
+        // 1. 更新图标状态
+        for (int i = 0; i < maskIcons.Length; i++)
+        {
+            maskIcons[i].sprite = (i == index) ? activeSprites[i] : inactiveSprites[i];
+
+            // 选中的变大一点
+            float scale = (i == index) ? 1.2f : 1.0f;
+            maskIcons[i].transform.DOScale(scale, 0.2f);
+        }
+
+        // 2. 移动指示框
+        activeMaskIndicator.DOMove(maskIcons[index].transform.position, 0.2f).SetEase(Ease.OutBack);
+    }
+    */
+
+    // --- 3. 判定反馈 (Juice) ---
+    #region 2. 判定反馈与飘字
+
+    /// <summary>
+    /// 显示判定结果
+    /// </summary>
+    /// <param name="type">0=Miss, 1=Good, 2=Perfect</param>
+    public void ShowHitFeedback(int type)
+    {
+        string text = "";
+        Color color = Color.white;
+        float punchScale = 1f;
+
+        switch (type)
+        {
+            case 0:
+                text = "太牢！";
+                color = colorMiss;
+                punchScale = 1.0f;
+                break;
+            case 1:
+                text = "牢";
+                color = colorGood;
+                punchScale = 1.2f;
+                break;
+            case 2:
+                text = "好！";
+                color = colorPerfect;
+                punchScale = 1.5f;
+                break;
+        }
+
+        CreateFloatingText(text, color, punchScale);
+    }
+
+    // 内部私有方法：生成飘字
+    private void CreateFloatingText(string content, Color color, float scaleMult)
+    {
+        GameObject obj = Instantiate(feedbackPrefab, feedbackSpawnPoint);
+        // 假设 Prefab 里有一个 TextMeshProUGUI 组件
+        TextMeshProUGUI tmp = obj.GetComponentInChildren<TextMeshProUGUI>();
+
+        tmp.text = content;
+        tmp.color = color;
+        obj.transform.localScale = Vector3.one * scaleMult; // 根据判定等级调整大小
+
+        // 动画：向上飘 + 缩放消失
+        obj.transform.DOLocalMoveY(150f, 0.8f).SetEase(Ease.OutCirc);
+        CanvasGroup cg = obj.GetComponent<CanvasGroup>();
+        if (cg) cg.DOFade(0f, 0.5f).SetDelay(0.3f);
+
+        Destroy(obj, 1.0f);
+    }
+
+    #endregion
+
+
+    #region 3. 对话与剧情
+
+    /// <summary>
+    /// Boss 说话（显示气泡）
+    /// </summary>
+    /// <param name="content">台词内容</param>
+    /// <param name="duration">显示几秒</param>
+    public void ShowBossDialogue(string content, float duration = 2f)
+    {
+        bossDialogueText.text = content;
+
+        // 弹入动画
+        bossDialogueGroup.alpha = 1f;
+        bossDialogueGroup.transform.localScale = Vector3.zero;
+        bossDialogueGroup.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
+
+        // 自动消失（如果需要的话，或者由逻辑层手动调用 Hide）
+        CancelInvoke(nameof(HideBossDialogue));
+        Invoke(nameof(HideBossDialogue), duration);
+    }
+
+    private void HideBossDialogue()
+    {
+        bossDialogueGroup.DOFade(0f, 0.3f);
+    }
+
+    /// <summary>
+    /// 玩家回怼（文字弹幕效果）
+    /// </summary>
+    public void ShowPlayerRetort(string content,float duration = 2f)
+    {
+        playerDialogueGroup.alpha = 1f;
+        playerDialogueGroup.transform.localScale = Vector3.zero;
+        playerDialogueGroup.transform.DOScale(1f, 0.2f).SetEase(Ease.InCubic);
+
+        playerRetortText.text = content;
+        /*
+        // 像漫画一样具有冲击力地出现
+        playerRetortText.transform.localScale = Vector3.one * 2f;
+        playerRetortText.alpha = 0f;
+
+        playerRetortText.transform.DOScale(1f, 0.2f).SetEase(Ease.InCubic);
+        playerRetortText.DOFade(1f, 0.1f);
+
+        // 1秒后淡出
+        playerRetortText.DOFade(0f, 0.5f).SetDelay(1.0f);
+        */
+        // 自动消失（如果需要的话，或者由逻辑层手动调用 Hide）
+        CancelInvoke(nameof(HidePlayerDialogue));
+        Invoke(nameof(HidePlayerDialogue), duration);
+    }
+
+    private void HidePlayerDialogue()
+    {
+        playerDialogueGroup.DOFade(0f, 0.3f);
+    }
+    #endregion
+}
