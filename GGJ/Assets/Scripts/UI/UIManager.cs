@@ -92,45 +92,40 @@ public class UIManager : MonoBehaviour
     /// 显示判定结果
     /// </summary>
     /// <param name="type">0=Miss, 1=Good, 2=Perfect</param>
-    public void ShowHitFeedback(int type)
+    public void ShowHitFeedback(int type, Vector3? customPos = null)
     {
         if (gameplayPanel != null)
         {
-            gameplayPanel.ShowHitFeedback(type);
+            gameplayPanel.ShowHitFeedback(type,customPos);
         }
     }
 
-   
+
     #endregion
 
     #region 3. 对话与剧情
 
-    /// <summary>
-    /// Boss 说话（显示气泡）
-    /// </summary>
-    /// <param name="content">台词内容</param>
-    /// <param name="duration">显示几秒</param>
-    public void ShowBossDialogue(string content, float duration = 2f)
+    // Boss 说话
+    public void ShowBossDialogue(string content)
     {
         if (gameplayPanel != null)
         {
-            gameplayPanel.ShowBossDialogue(content,duration);
+            // 现在改为发射弹幕
+            gameplayPanel.SpawnBossDanmaku(content);
         }
     }
 
-    /// <summary>
-    /// 玩家回怼（文字弹幕效果）
-    /// </summary>
-    public void ShowPlayerRetort(string content, float duration = 2f)
+    // 玩家回怼
+    public void ShowPlayerRetort(string content)
     {
         if (gameplayPanel != null)
         {
-            gameplayPanel.ShowPlayerRetort(content,duration=2f);
+            gameplayPanel.SpawnPlayerDanmaku(content);
         }
     }
 
     #endregion
-
+    
     #region 4. 面板调用
     public void ShowStartPanel()
     {
