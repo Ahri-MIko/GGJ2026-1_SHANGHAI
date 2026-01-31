@@ -1,0 +1,57 @@
+# 关卡配置文件示例
+# 这是一个注释行，以#或//开头的行会被忽略
+
+# 关卡基本信息
+LevelName: 第一关 - 节奏入门
+StartTime: 3
+TotalRounds: 5
+
+# 第一轮 - 慢速热身（关卡开始立即触发）
+Round: 0
+StartTime: 0
+BPM: 100
+Duration: 20
+BeatDuration: 0.2
+
+# 第二轮 - 标准节奏（20秒时触发）
+Round: 1
+StartTime: 20
+BPM: 120
+Duration: 25
+
+# 第三轮 - 加速（45秒时触发）
+Round: 2
+StartTime: 45
+BPM: 140
+Duration: 20
+
+# 第四轮 - 快速挑战（65秒时触发）
+Round: 3
+StartTime: 65
+BPM: 160
+Duration: 18
+
+# 第五轮 - 极限速度（83秒时触发）
+Round: 4
+StartTime: 83
+BPM: 180
+Duration: 15
+
+# 配置说明：
+# LevelName: 关卡名称
+# StartTime: (关卡层级) 关卡延迟开始时间（秒），倒计时时长
+# TotalRounds: 总轮次数
+# Round: 轮次索引（从0开始）
+# StartTime: (轮次层级) 该轮开始时间（从关卡正式开始后计时，秒）
+# BPM: 每分钟节拍数（Beats Per Minute）
+# Duration: 该轮持续时间（秒）
+# BeatDuration: 每个节拍指示器的显示时长（秒），默认0.2秒
+
+# 游戏机制：
+# 1. 每轮开始时，7个球依次变蓝（间隔为BPM决定）
+# 2. 每个球变蓝持续BeatDuration秒
+# 3. 第7个球变蓝时，玩家需按空格键
+# 4. 判定标准：±0.3秒=完美，±0.5秒=一般，其他=失误
+
+# 时间线示例：
+# 游戏加载 → 3秒倒计时 → [0秒] 第1轮开始 → [20秒] 第2轮开始 → [45秒] 第3轮开始 → [65秒] 第4轮开始 → [83秒] 第5轮开始 → [98秒] 关卡完成

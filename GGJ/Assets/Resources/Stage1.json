@@ -1,0 +1,52 @@
+[
+    {
+        "BarId": 1,
+        "BossAEvent": 1001,
+        "PlayerBeat": 5,
+        "PlayerEvent": [
+            2001,
+            2002,
+            2003
+        ]
+    },
+    {
+        "BarId": 2,
+        "BossAEvent": 1002,
+        "PlayerBeat": 1,
+        "PlayerEvent": [
+            2001,
+            2002,
+            2003
+        ]
+    },
+    {
+        "BarId": 3,
+        "BossAEvent": 1003,
+        "PlayerBeat": 1,
+        "PlayerEvent": [
+            2001,
+            2002,
+            2003
+        ]
+    },
+    {
+        "BarId": 4,
+        "BossAEvent": 1004,
+        "PlayerBeat": 1,
+        "PlayerEvent": [
+            2001,
+            2002,
+            2003
+        ]
+    },
+    {
+        "BarId": 5,
+        "BossAEvent": 1005,
+        "PlayerBeat": 1,
+        "PlayerEvent": [
+            2001,
+            2002,
+            2003
+        ]
+    }
+]

@@ -1,0 +1,25 @@
+[
+    {
+        "EventId": 1001,
+        "Detail": "BOSS说XXXXX",
+        "EventType": 1,
+        "SoundFiles": [
+            "boss_4",
+            "boss_6"
+        ],
+        "SoundBeat": [
+            1,
+            5
+        ],
+        "Buff": [],
+        "AVariable": [
+            3
+        ],
+        "BVariable": [
+            5
+        ],
+        "CVariable": [
+            6
+        ]
+    }
+]
