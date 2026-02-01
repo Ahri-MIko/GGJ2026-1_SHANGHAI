@@ -17,16 +17,36 @@ public class PotManager : MonoBehaviour
     [Tooltip("非1-7拍时箭头的默认位置")]
     [SerializeField] private Transform defaultArrowPosition;
 
+    [Header("是否反转")]
+    [Tooltip("锅的显示是否反转过来")]
+    [SerializeField] private bool inverse;
+
     private void Awake()
     {
-        Arrow.SetActive(false);
+        if(!inverse)
+        {
+            Arrow.SetActive(false);
+        }
+        else
+        {
+            Arrow.SetActive(true);
+        }
+        
     }
 
     public void ShowPot(int index)
     {
         if (index >= 1 && index <= 7)
         {
-            pots[index - 1].SetActive(true);
+            
+            if (!inverse)
+            {
+                pots[index - 1].SetActive(true);
+            }
+            else
+            {
+                pots[index - 1].SetActive(false);
+            }
         }
     }
 
@@ -37,7 +57,15 @@ public class PotManager : MonoBehaviour
     {
         if (index >= 1 && index <= 7)
         {
-            pots[index - 1].SetActive(false);
+           
+            if (!inverse)
+            {
+                pots[index - 1].SetActive(false);
+            }
+            else
+            {
+                pots[index - 1].SetActive(true);
+            }
         }
     }
 

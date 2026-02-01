@@ -946,6 +946,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9022983659620526435, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -23
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1973,6 +1977,7 @@ MonoBehaviour:
   Arrow: {fileID: 23266364}
   ArrowDistance: 90
   defaultArrowPosition: {fileID: 426821925}
+  inverse: 1
 --- !u!1 &1991510484
 GameObject:
   m_ObjectHideFlags: 0
