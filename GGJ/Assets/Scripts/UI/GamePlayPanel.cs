@@ -36,6 +36,18 @@ public class GameplayPanel : BasePanel
     [SerializeField] private TextMeshProUGUI playerRetortText; // 玩家回怼文字
     [SerializeField] private CanvasGroup playerDialogueGroup;
 
+    [Header("Danmaku System")]
+    public GameObject danmakuPrefab;      // 拖入 Danmaku_Prefab
+    public Transform danmakuContainer;    // 拖入一个全屏透明 Panel 作为父物体
+
+    [Header("Settings")]
+    public float minSpeed = 3f; // 最快3秒飞过
+    public float maxSpeed = 6f; // 最慢6秒飞过
+
+    // 弹幕生成的上下边界 (Y轴)，防止弹幕飞到UI外面或者挡住重要信息
+    public float topY = 400f;
+    public float bottomY = -200f;
+
     [Header("=== 资源配置 (美术相关) ===")]
     public Color colorPerfect = Color.red;
     public Color colorGood = Color.yellow;
@@ -73,7 +85,7 @@ public class GameplayPanel : BasePanel
     public void UpdateBossHP(float percent)
     {
         // 1. 前景条立刻变（或快速变）
-        bossHpFill.DOFillAmount(percent, 0.2f);
+        //bossHpFill.DOFillAmount(percent, 0.2f);
 
         // 2. 背景缓冲条延迟跟随 (传统的打击感血条)
         bossHpRedBar.DOFillAmount(percent, 0.5f).SetDelay(0.2f).SetEase(Ease.OutCirc);
@@ -81,14 +93,19 @@ public class GameplayPanel : BasePanel
         // 3. 立绘受击震动
         bossPortrait.transform.DOShakePosition(0.3f, 10f);
         bossPortrait.DOColor(Color.red, 0.1f).OnComplete(() => bossPortrait.DOColor(Color.white, 0.1f));
-    }
 
-    
-    /// <summary>
-    /// 更新玩家 面子条
-    /// </summary>
-    /// <param name="percent">0.0 到 1.0</param>
-    public void UpdatePlayerHP(float percent)
+        //4.文本改变
+        float hp = percent * 100;
+         bossFaceText.text = hp.ToString();
+
+}
+
+
+/// <summary>
+/// 更新玩家 面子条
+/// </summary>
+/// <param name="percent">0.0 到 1.0</param>
+public void UpdatePlayerHP(float percent)
     {
         playerFaceFill.DOFillAmount(percent, 0.3f);
 
@@ -100,33 +117,14 @@ public class GameplayPanel : BasePanel
         }
     }
 
-    /*
-    // --- 2. 脸谱切换系统 (QWER) ---
-    public void SwitchMaskUI(int index) // index: 0=Q, 1=W, 2=E, 3=R
-    {
-        // 1. 更新图标状态
-        for (int i = 0; i < maskIcons.Length; i++)
-        {
-            maskIcons[i].sprite = (i == index) ? activeSprites[i] : inactiveSprites[i];
 
-            // 选中的变大一点
-            float scale = (i == index) ? 1.2f : 1.0f;
-            maskIcons[i].transform.DOScale(scale, 0.2f);
-        }
-
-        // 2. 移动指示框
-        activeMaskIndicator.DOMove(maskIcons[index].transform.position, 0.2f).SetEase(Ease.OutBack);
-    }
-    */
 
     // --- 3. 判定反馈 (Juice) ---
     #region 2. 判定反馈与飘字
 
-    /// <summary>
-    /// 显示判定结果
-    /// </summary>
-    /// <param name="type">0=Miss, 1=Good, 2=Perfect</param>
-    public void ShowHitFeedback(int type)
+    // 1. 公开方法：增加了 Vector3? customPos 参数
+    // 'Vector3?' 表示这个参数可以是 null
+    public void ShowHitFeedback(int type, Vector3? customPos = null)
     {
         string text = "";
         Color color = Color.white;
@@ -135,44 +133,52 @@ public class GameplayPanel : BasePanel
         switch (type)
         {
             case 0:
-                text = "太牢！";
+                text = "失误！";
                 color = colorMiss;
                 punchScale = 1.0f;
                 break;
             case 1:
-                text = "牢";
+                text = "一般";
                 color = colorGood;
                 punchScale = 1.2f;
                 break;
             case 2:
-                text = "好！";
+                text = "完美！";
                 color = colorPerfect;
                 punchScale = 1.5f;
                 break;
         }
 
-        CreateFloatingText(text, color, punchScale);
+        // 逻辑判断：如果传入了自定义位置，就用传入的；否则用默认的挂点位置
+        Vector3 finalPos = customPos.HasValue ? customPos.Value : feedbackSpawnPoint.position;
+
+        CreateFloatingText(text, color, punchScale, finalPos);
     }
 
-    // 内部私有方法：生成飘字
-    private void CreateFloatingText(string content, Color color, float scaleMult)
+    // 2. 私有方法：增加了 pos 参数
+    private void CreateFloatingText(string content, Color color, float scaleMult, Vector3 pos)
     {
-        GameObject obj = Instantiate(feedbackPrefab, feedbackSpawnPoint);
-        // 假设 Prefab 里有一个 TextMeshProUGUI 组件
+        // 注意：这里 Instantiate 的父物体依然设为 feedbackSpawnPoint.parent
+        // 是为了保证它在 Hierarchy 里整齐，且由 Canvas 渲染
+        GameObject obj = Instantiate(feedbackPrefab, feedbackSpawnPoint.parent);
+
         TextMeshProUGUI tmp = obj.GetComponentInChildren<TextMeshProUGUI>();
 
         tmp.text = content;
         tmp.color = color;
-        obj.transform.localScale = Vector3.one * scaleMult; // 根据判定等级调整大小
+        obj.transform.localScale = Vector3.one * scaleMult;
 
-        // 动画：向上飘 + 缩放消失
-        obj.transform.DOLocalMoveY(150f, 0.8f).SetEase(Ease.OutCirc);
+        // 【关键修改 1】：直接设置世界坐标
+        obj.transform.position = pos;
+
+       
+        obj.transform.DOLocalMoveY(100f, 0.8f).SetRelative(true).SetEase(Ease.OutCirc);
+
         CanvasGroup cg = obj.GetComponent<CanvasGroup>();
         if (cg) cg.DOFade(0f, 0.5f).SetDelay(0.3f);
 
         Destroy(obj, 1.0f);
     }
-
     #endregion
 
 
@@ -231,6 +237,47 @@ public class GameplayPanel : BasePanel
     private void HidePlayerDialogue()
     {
         playerDialogueGroup.DOFade(0f, 0.3f);
+    }
+    #endregion
+
+    #region 4.弹幕对话
+    /// <summary>
+    /// Boss 发射弹幕攻击
+    /// </summary>
+    public void SpawnBossDanmaku(string text)
+    {
+        // 1. 随机高度
+        float randomY = UnityEngine.Random.Range(bottomY, topY);
+
+        // 2. 随机速度 (或者根据字数决定，字多飞得慢一点让人看清)
+        float duration = UnityEngine.Random.Range(minSpeed, maxSpeed);
+
+        // 3. 生成并发射
+        CreateDanmaku(text, Color.white, duration, randomY);
+    }
+
+    /// <summary>
+    /// 玩家回怼弹幕 (通常更快、更显眼)
+    /// </summary>
+    public void SpawnPlayerDanmaku(string text)
+    {
+        // 玩家的弹幕可以固定在某个高度，或者用特殊的金色
+        float fixedY = 0f; // 屏幕正中间
+        float fastSpeed = 2.0f; // 快速反击
+
+        CreateDanmaku(text, Color.yellow, fastSpeed, fixedY);
+    }
+
+    // 内部通用生成方法
+    private void CreateDanmaku(string content, Color color, float duration, float yPos)
+    {
+        GameObject obj = Instantiate(danmakuPrefab, danmakuContainer);
+        DanmakuBullet bullet = obj.GetComponent<DanmakuBullet>();
+
+        if (bullet != null)
+        {
+            bullet.Fire(content, color, duration, yPos);
+        }
     }
     #endregion
 }

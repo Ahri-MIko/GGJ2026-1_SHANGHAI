@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Test : MonoBehaviour
 {
     float maxHealth = 100f;
     float currentHealth;
+    float playerCurrentHealth;
+    public Image testCube;
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+        playerCurrentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -44,6 +48,18 @@ public class Test : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             UIManager.Instance.ShowPlayerRetort("Hello World");
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            playerCurrentHealth -= 10;
+            UIManager.Instance.UpdatePlayerHP(playerCurrentHealth / maxHealth);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            playerCurrentHealth += 5;
+            UIManager.Instance.UpdatePlayerHP(playerCurrentHealth / maxHealth);
         }
     }
 }
