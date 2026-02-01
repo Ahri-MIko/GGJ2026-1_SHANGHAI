@@ -29,6 +29,7 @@ public class AudioManager : SingletonMono<AudioManager>
     // 缓存字典
     private Dictionary<string, BGMData> bgmDictionary;
     private Dictionary<string, SoundEffectData> sfxDictionary;
+    private Dictionary<string, AudioPoolEntry> audioPoolDictionary;
     
     // 当前播放的BGM
     private string currentBGMName = "";
@@ -117,6 +118,43 @@ public class AudioManager : SingletonMono<AudioManager>
         }
 
         Debug.Log($"AudioManager初始化完成: {bgmDictionary.Count} BGM, {sfxDictionary.Count} 音效");
+        
+        // 构建音频池字典
+        BuildAudioPoolDictionary();
+    }
+    
+    /// <summary>
+    /// 构建音频池字典
+    /// </summary>
+    private void BuildAudioPoolDictionary()
+    {
+        audioPoolDictionary = new Dictionary<string, AudioPoolEntry>();
+        
+        if (soundData == null || soundData.audioPool == null)
+        {
+            Debug.LogWarning("AudioManager: 音频池未配置！");
+            return;
+        }
+        
+        if (soundData.audioPool.Length > 0)
+        {
+            foreach (var entry in soundData.audioPool)
+            {
+                if (!string.IsNullOrEmpty(entry.audioID) && entry.clip != null)
+                {
+                    if (!audioPoolDictionary.ContainsKey(entry.audioID))
+                    {
+                        audioPoolDictionary.Add(entry.audioID, entry);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"AudioManager: 音频池ID重复 - {entry.audioID}");
+                    }
+                }
+            }
+            
+            Debug.Log($"音频池初始化完成: {audioPoolDictionary.Count} 条音频");
+        }
     }
 
     #region BGM控制
@@ -318,6 +356,88 @@ public class AudioManager : SingletonMono<AudioManager>
         }
     }
 
+    #endregion
+
+    #region 音频池控制
+    
+    /// <summary>
+    /// 从音频池中根据ID播放音频
+    /// </summary>
+    /// <param name="audioID">音频ID</param>
+    public void PlayAudioFromPool(string audioID)
+    {
+        if (audioPoolDictionary == null || !audioPoolDictionary.ContainsKey(audioID))
+        {
+            Debug.LogWarning($"AudioManager: 音频池中找不到ID - {audioID}");
+            return;
+        }
+        
+        AudioPoolEntry entry = audioPoolDictionary[audioID];
+        float volume = entry.volume * sfxMasterVolume;
+        
+        sfxSource.PlayOneShot(entry.clip, volume);
+        Debug.Log($"从音频池播放: {audioID}");
+    }
+    
+    /// <summary>
+    /// 从音频池中根据ID精确时间播放音频
+    /// </summary>
+    /// <param name="audioID">音频ID</param>
+    /// <param name="dspTime">DSP时间</param>
+    public void PlayAudioFromPoolScheduled(string audioID, double dspTime)
+    {
+        if (audioPoolDictionary == null || !audioPoolDictionary.ContainsKey(audioID))
+        {
+            Debug.LogWarning($"AudioManager: 音频池中找不到ID - {audioID}");
+            return;
+        }
+        
+        AudioPoolEntry entry = audioPoolDictionary[audioID];
+        
+        // 创建临时AudioSource用于调度播放
+        GameObject tempObj = new GameObject($"PoolAudio_{audioID}");
+        tempObj.transform.SetParent(transform);
+        AudioSource tempSource = tempObj.AddComponent<AudioSource>();
+        
+        tempSource.clip = entry.clip;
+        tempSource.volume = entry.volume * sfxMasterVolume;
+        tempSource.playOnAwake = false;
+        
+        // 调度播放
+        tempSource.PlayScheduled(dspTime);
+        
+        // 播放完成后销毁
+        Destroy(tempObj, entry.clip.length + 0.1f);
+        
+        Debug.Log($"从音频池调度播放: {audioID} at DSP time {dspTime:F4}");
+    }
+
+    public void PlayRandomAudioFromPool()
+    {
+        if (audioPoolDictionary == null || audioPoolDictionary.Count == 0)
+        {
+            Debug.LogWarning("AudioManager: 音频池为空，无法随机播放！");
+            return;
+        }
+
+        // 将 Dictionary 的键转换为列表以进行索引随机
+        List<string> keys = new List<string>(audioPoolDictionary.Keys);
+        int randomIndex = UnityEngine.Random.Range(0, keys.Count);
+        string randomID = keys[randomIndex];
+
+        PlayAudioFromPool(randomID);
+    }
+
+    /// <summary>
+    /// 检查音频池中是否存在指定ID的音频
+    /// </summary>
+    /// <param name="audioID">音频ID</param>
+    /// <returns>是否存在</returns>
+    public bool HasAudioInPool(string audioID)
+    {
+        return audioPoolDictionary != null && audioPoolDictionary.ContainsKey(audioID);
+    }
+    
     #endregion
 
     #region 音量控制

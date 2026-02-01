@@ -22,8 +22,10 @@ public class JudgementResult
     public double DeviationMs;          // 偏差时间（毫秒）
     public string InputKey;             // 触发的按键
     public Category Category;           // 是否是特定语音（Specific）还是普通（Generic）
+    public int Event;                   // 特定语音触发的事件ID（0表示普通判定）
+    public string sequence;             //话语
     
-    public JudgementResult(JudgementLevel level, int beatIndex, double deviation, string inputKey, Category category = Category.Generic)
+    public JudgementResult(JudgementLevel level, int beatIndex, double deviation, string inputKey, Category category = Category.Generic, int eventId = 0,string seq = "")
     {
         Level = level;
         BeatIndex = beatIndex;
@@ -31,5 +33,7 @@ public class JudgementResult
         DeviationMs = deviation * 1000;
         InputKey = inputKey;
         Category = category;
+        Event = eventId;
+        sequence = seq;
     }
 }

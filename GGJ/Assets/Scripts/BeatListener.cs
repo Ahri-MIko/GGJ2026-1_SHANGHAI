@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 /// <summary>
@@ -12,6 +13,14 @@ public class BeatListener : MonoBehaviour
         
         // 注册玩家判定事件监听
         EventCenter.Instance.AddEventListener<JudgementResult>(GameEvents.OnPlayerJudgement, OnPlayerJudgement);
+
+
+
+        //播放随机音频
+        EventCenter.Instance.AddEventListener(GameEvents.PlayRandomVoice,PlayRandomVoice);
+
+        //播放特定事件
+        EventCenter.Instance.AddEventListener<int>(GameEvents.OnPlayVoice, PlaySpecialVoice);
     }
 
     private void OnDestroy()
@@ -21,6 +30,13 @@ public class BeatListener : MonoBehaviour
         
         // 注销玩家判定事件监听
         EventCenter.Instance.RemoveEventListener<JudgementResult>(GameEvents.OnPlayerJudgement, OnPlayerJudgement);
+
+        //注销播放随机音频
+        EventCenter.Instance.RemoveEventListener(GameEvents.PlayRandomVoice, PlayRandomVoice);
+
+        //播放特定事件
+        EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnPlayVoice, PlaySpecialVoice);
+
     }
 
     /// <summary>
@@ -31,6 +47,19 @@ public class BeatListener : MonoBehaviour
     {
         //需要节拍触发时间
     }
+
+    //播放指定音效
+    private void PlaySpecialVoice(int EventID)
+    {
+        AudioManager.Instance.PlaySound(EventID.ToString());
+    }
+
+    //播放随机音效
+    private void PlayRandomVoice()
+    {
+        AudioManager.Instance.PlayRandomAudioFromPool();//随机播放音频
+    }
+
 
     /// <summary>
     /// 接收到玩家判定事件的回调
@@ -64,7 +93,7 @@ public class BeatListener : MonoBehaviour
         Quality quality = MapJudgementToQuality(result.Level);
         
         // 触发语音和表情包事件
-        TriggerVoiceAndEmoji(currentAction, quality, result.Category);
+        TriggerVoiceAndEmoji(currentAction, quality, result.Category,result);
         
         // 从配置中获取效果
         if (GameConfig.Data.TryGetValue(currentAction, out var categoryDict))
@@ -151,11 +180,18 @@ public class BeatListener : MonoBehaviour
     /// <summary>
     /// 触发语音和表情包事件
     /// </summary>
-    private void TriggerVoiceAndEmoji(ActionType action, Quality quality, Category category)
+    private void TriggerVoiceAndEmoji(ActionType action, Quality quality, Category category,JudgementResult result)
     {
         string voiceId = "";
         string emojiType = "";
-        
+
+        //PerfectReply 完美回怼
+        //NormalReply 普通表情包
+        //HurtReply 受伤表情包
+        //PerfectChaos 完美乱回
+        //PerfectEat 完美吃饭
+        //None 无
+
         // 根据行为类型、质量和类别确定语音和表情包
         switch (action)
         {
@@ -186,15 +222,15 @@ public class BeatListener : MonoBehaviour
                     {
                         case Quality.Perfect:
                             voiceId = "Q_Generic_Perfect";
-                            emojiType = "PerfectEmoji";
+                            emojiType = "PerfectReply";
                             break;
                         case Quality.Normal:
                             voiceId = "Q_Generic_Normal";
-                            emojiType = "NormalEmoji";
+                            emojiType = "NormalReply";
                             break;
                         case Quality.Fail:
                             voiceId = "Q_Generic_Fail";
-                            emojiType = "HurtEmoji";
+                            emojiType = "HurtReply";
                             break;
                     }
                 }
@@ -211,11 +247,11 @@ public class BeatListener : MonoBehaviour
                             break;
                         case Quality.Normal:
                             voiceId = "W_Specific_Normal";
-                            emojiType = "NormalChaos";
+                            emojiType = "NormalReply";
                             break;
                         case Quality.Fail:
                             voiceId = "W_Specific_Fail";
-                            emojiType = "HurtChaos";
+                            emojiType = "HurtReply";
                             break;
                     }
                 }
@@ -225,15 +261,15 @@ public class BeatListener : MonoBehaviour
                     {
                         case Quality.Perfect:
                             voiceId = "W_Generic_Perfect";
-                            emojiType = "PerfectChaosEmoji";
+                            emojiType = "PerfectChaos";
                             break;
                         case Quality.Normal:
                             voiceId = "W_Generic_Normal";
-                            emojiType = "NormalChaosEmoji";
+                            emojiType = "NormalReply";
                             break;
                         case Quality.Fail:
                             voiceId = "W_Generic_Fail";
-                            emojiType = "HurtChaosEmoji";
+                            emojiType = "HurtReply";
                             break;
                     }
                 }
@@ -250,11 +286,11 @@ public class BeatListener : MonoBehaviour
                             break;
                         case Quality.Normal:
                             voiceId = "E_Specific_Normal";
-                            emojiType = "NormalEat";
+                            emojiType = "None";
                             break;
                         case Quality.Fail:
                             voiceId = "E_Specific_Fail";
-                            emojiType = "HurtEat";
+                            emojiType = "HurtReply";
                             break;
                     }
                 }
@@ -264,15 +300,15 @@ public class BeatListener : MonoBehaviour
                     {
                         case Quality.Perfect:
                             voiceId = "E_Generic_Perfect";
-                            emojiType = "PerfectEatEmoji";
+                            emojiType = "PerfectEat";
                             break;
                         case Quality.Normal:
                             voiceId = "E_Generic_Normal";
-                            emojiType = "NormalEatEmoji";
+                            emojiType = "None";
                             break;
                         case Quality.Fail:
                             voiceId = "E_Generic_Fail";
-                            emojiType = "HurtEatEmoji";
+                            emojiType = "HurtReply";
                             break;
                     }
                 }
@@ -280,12 +316,20 @@ public class BeatListener : MonoBehaviour
         }
         
         // 触发语音事件
-        if (!string.IsNullOrEmpty(voiceId))
+        if (!string.IsNullOrEmpty(voiceId) && voiceId == "Q_Specific_Perfect")
         {
-            EventCenter.Instance.EventTrigger(GameEvents.OnPlayVoice, voiceId);
-            Debug.Log($"播放语音: {voiceId}");
+            EventCenter.Instance.EventTrigger(GameEvents.OnPlayVoice, result.Event);
+            //触发事件
+            EventCenter.Instance.EventTrigger(GameEvents.PlayerMSG,result.sequence);
+            Debug.Log($"播放事件语音: {voiceId}");
         }
         
+        if(!string.IsNullOrEmpty(voiceId) && voiceId == "W_Specific_Perfect")
+        {
+            EventCenter.Instance.EventTrigger(GameEvents.PlayRandomVoice);
+            Debug.Log($"播放随机回复");
+        }
+
         // 触发表情包事件
         if (!string.IsNullOrEmpty(emojiType))
         {

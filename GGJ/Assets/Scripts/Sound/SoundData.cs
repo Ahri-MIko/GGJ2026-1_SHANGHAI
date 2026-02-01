@@ -13,6 +13,10 @@ public class SoundData : ScriptableObject
     [Header("音效（Sound Effects）")]
     [Tooltip("音效列表")]
     public SoundEffectData[] soundEffectList;
+    
+    [Header("音频池（Audio Pool）")]
+    [Tooltip("音频池 - 用于存储带ID的音频")]
+    public AudioPoolEntry[] audioPool;
 }
 
 /// <summary>
@@ -43,6 +47,23 @@ public class SoundEffectData
 {
     [Tooltip("音效名称标识")]
     public string soundName;
+    
+    [Tooltip("音频片段")]
+    public AudioClip clip;
+    
+    [Tooltip("音量（0-1）")]
+    [Range(0f, 1f)]
+    public float volume = 1f;
+}
+
+/// <summary>
+/// 音频池条目 - 包含 AudioClip 和 ID
+/// </summary>
+[System.Serializable]
+public class AudioPoolEntry
+{
+    [Tooltip("音频ID标识")]
+    public string audioID;
     
     [Tooltip("音频片段")]
     public AudioClip clip;

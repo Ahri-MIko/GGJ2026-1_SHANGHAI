@@ -1,0 +1,704 @@
+[
+    {
+        "BarId": 1,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 2,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 3,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 4,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 5,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": ""
+    },
+    {
+        "BarId": 6,
+        "BossBeat": 1,
+        "BossAEvent": 1016,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "1 - 今年怎么有空回来啦？"
+    },
+    {
+        "BarId": 7,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2016
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 8,
+        "BossBeat": 1,
+        "BossAEvent": 1017,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "2 - 还在那小地方上班呢"
+    },
+    {
+        "BarId": 9,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2017
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 10,
+        "BossBeat": 1,
+        "BossAEvent": 1018,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "3 - 头发都少啦"
+    },
+    {
+        "BarId": 11,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2018
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 12,
+        "BossBeat": 1,
+        "BossAEvent": 1019,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "4 - 年终奖多少"
+    },
+    {
+        "BarId": 13,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2019
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 14,
+        "BossBeat": 1,
+        "BossAEvent": 1020,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "5 - 攒下钱了吗"
+    },
+    {
+        "BarId": 15,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2020
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 16,
+        "BossBeat": 1,
+        "BossAEvent": 1021,
+        "PlayerBeat": [
+            1,
+            5
+        ],
+        "PlayerEvent": [
+            0,
+            0
+        ],
+        "Note": "6 - 家里没房吗？"
+    },
+    {
+        "BarId": 17,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2021
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 18,
+        "BossBeat": 1,
+        "BossAEvent": 1022,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "7 - 这工作一看就不稳定"
+    },
+    {
+        "BarId": 19,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            7
+        ],
+        "PlayerEvent": [
+            2022,
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 20,
+        "BossBeat": 1,
+        "BossAEvent": 1023,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "8 - 私企要倒闭的！"
+    },
+    {
+        "BarId": 21,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            7
+        ],
+        "PlayerEvent": [
+            2023,
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 22,
+        "BossBeat": 1,
+        "BossAEvent": 1024,
+        "PlayerBeat": [
+            5
+        ],
+        "PlayerEvent": [
+            0
+        ],
+        "Note": "9 - 你干这个图啥呀？"
+    },
+    {
+        "BarId": 23,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            5
+        ],
+        "PlayerEvent": [
+            2024,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 24,
+        "BossBeat": 1,
+        "BossAEvent": 1025,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": "10 - 没编制咋办？"
+    },
+    {
+        "BarId": 25,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2025
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 26,
+        "BossBeat": 1,
+        "BossAEvent": 1026,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "11 - 给领导送礼啊"
+    },
+    {
+        "BarId": 27,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            7
+        ],
+        "PlayerEvent": [
+            2026,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 28,
+        "BossBeat": 1,
+        "BossAEvent": 1027,
+        "PlayerBeat": [
+            1,
+            4,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0
+        ],
+        "Note": "12 - 人情世故还没学会啊？"
+    },
+    {
+        "BarId": 29,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            2027
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 30,
+        "BossBeat": 5,
+        "BossAEvent": 1028,
+        "PlayerBeat": [],
+        "PlayerEvent": [],
+        "Note": "13 - 小心领导穿你小鞋"
+    },
+    {
+        "BarId": 31,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            5,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 32,
+        "BossBeat": 5,
+        "BossAEvent": 1029,
+        "PlayerBeat": [
+            1,
+            5,
+            7
+        ],
+        "PlayerEvent": [
+            2028,
+            0,
+            0
+        ],
+        "Note": "14 - 以后会不会啃老啊？"
+    },
+    {
+        "BarId": 33,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 34,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            2,
+            6
+        ],
+        "PlayerEvent": [
+            2029,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 35,
+        "BossBeat": 1,
+        "BossAEvent": 1030,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            0
+        ],
+        "Note": "15 - 这样混，书都白读了"
+    },
+    {
+        "BarId": 36,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0,
+            2030
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 37,
+        "BossBeat": 1,
+        "BossAEvent": 1031,
+        "PlayerBeat": [
+            1,
+            3,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0
+        ],
+        "Note": "16 - 你挣这点算什么？"
+    },
+    {
+        "BarId": 38,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            4,
+            6
+        ],
+        "PlayerEvent": [
+            2031,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 39,
+        "BossBeat": 1,
+        "BossAEvent": 1032,
+        "PlayerBeat": [
+            1,
+            3,
+            6,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": "17 - 考公上岸，光宗耀祖！早该开始备考啦"
+    },
+    {
+        "BarId": 40,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            2,
+            3,
+            4,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 41,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 42,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            2032
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 43,
+        "BossBeat": 1,
+        "BossAEvent": 1033,
+        "PlayerBeat": [
+            1,
+            4,
+            5,
+            6
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": "18 - 我知道有些话你不爱听"
+    },
+    {
+        "BarId": 44,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 45,
+        "BossBeat": 7,
+        "BossAEvent": 1034,
+        "PlayerBeat": [
+            1,
+            2,
+            3,
+            4,
+            7
+        ],
+        "PlayerEvent": [
+            2033,
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": "19 - 相信长辈"
+    },
+    {
+        "BarId": 46,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            4,
+            6
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 47,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            4,
+            6
+        ],
+        "PlayerEvent": [
+            2034,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 48,
+        "BossBeat": 6,
+        "BossAEvent": 1035,
+        "PlayerBeat": [
+            1,
+            3,
+            5,
+            6,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": "20 - 以后别后悔"
+    },
+    {
+        "BarId": 49,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7
+        ],
+        "PlayerEvent": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 50,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1,
+            3,
+            6
+        ],
+        "PlayerEvent": [
+            2035,
+            0,
+            0
+        ],
+        "Note": ""
+    },
+    {
+        "BarId": 51,
+        "BossBeat": 0,
+        "BossAEvent": 0,
+        "PlayerBeat": [
+            1
+        ],
+        "PlayerEvent": [
+            0
+        ],
+        "Note": ""
+    }
+]

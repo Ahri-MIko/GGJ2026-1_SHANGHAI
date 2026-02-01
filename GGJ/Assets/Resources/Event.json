@@ -1,156 +1,506 @@
 [
     {
-        "EventId": 1001,
+        "EventId": "1001",
         "Note": "1 - 咋又一个人回来的",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "咋又一个人回来的？",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1002,
+        "EventId": "1002",
         "Note": "2 - 啥时候找对象啊？",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "啥时候找对象？",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1003,
+        "EventId": "1003",
         "Note": "3 - 没对象那能好吗？",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "没对象那能好吗？",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1004,
+        "EventId": "1004",
         "Note": "4 - 眼光别太高",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "眼光别太高",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1005,
+        "EventId": "1005",
         "Note": "5 - 喜欢啥样的呀？",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "喜欢啥样的呀？",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1006,
+        "EventId": "1006",
         "Note": "6 - 楼下内个谁就和你蛮配的",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "楼下那个谁和你蛮配",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1007,
+        "EventId": "1007",
         "Note": "7 - 女人过三十，就贬值啦！",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "女人过三十就贬值啦",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1008,
+        "EventId": "1008",
         "Note": "8 - 你高中同学都有娃啦！",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "你高中同学都有娃了",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1009,
+        "EventId": "1009",
         "Note": "9 - 啥时候结婚，给个准话！",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "啥时候结婚，给个准话！",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1010,
+        "EventId": "1010",
         "Note": "10 - 拖到没人要咋办",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "拖到没人要咋办！",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1011,
+        "EventId": "1011",
         "Note": "11 - 连孩子也不要了？",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "连小孩也不要了？",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1012,
+        "EventId": "1012",
         "Note": "12 - 什么年纪做什么事！",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "什么年纪做什么事！",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1013,
+        "EventId": "1013",
         "Note": "13 - 老了谁养你啊",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "老了谁养你？",
+        "EventType": 1,
+        "SoundFile": ""
     },
     {
-        "EventId": 1014,
+        "EventId": "1014",
         "Note": "14 - 不孝有三，无后为大！",
-        "EventType": "",
-        "SoundFile": [],
-        "SoundBeat": [],
-        "Buff": 0,
-        "AVariable": 0,
-        "BVariable": 0,
-        "CVariable": 0
+        "ShowMessage": "不孝有三，无后为大！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1015",
+        "Note": "15 - 我看你到时候怎么办.",
+        "ShowMessage": "我看你到时候怎么办！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1016",
+        "Note": "1 - 今年怎么有空回来啦？",
+        "ShowMessage": "今年怎么有空回来啦？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1017",
+        "Note": "2 - 还在那小地方上班呢",
+        "ShowMessage": "还在那小地方上班呢？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1018",
+        "Note": "3 - 头发都少啦",
+        "ShowMessage": "诶哟，头发怎么少啦？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1019",
+        "Note": "4 - 年终奖多少",
+        "ShowMessage": "累成这样，年终奖多少呀",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1020",
+        "Note": "5 - 攒下钱了吗",
+        "ShowMessage": "城里攒下钱了吗？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1021",
+        "Note": "6 - 家里没房吗？",
+        "ShowMessage": "家里有房还租房啊？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1022",
+        "Note": "7 - 这工作一看就不稳定",
+        "ShowMessage": "这工作一看就不稳定！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1023",
+        "Note": "8 - 私企要倒闭的！",
+        "ShowMessage": "私企要倒闭的！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1024",
+        "Note": "9 - 你干这个图啥呀？",
+        "ShowMessage": "你干这个图啥呀？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1025",
+        "Note": "10 - 没编制咋办？",
+        "ShowMessage": "没编制咋办？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1026",
+        "Note": "11 - 给领导送礼啊",
+        "ShowMessage": "是不是没给领导送礼啊？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1027",
+        "Note": "12 - 人情世故还没学会啊？",
+        "ShowMessage": "人情世故还没学会啊？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1028",
+        "Note": "13 - 小心领导穿你小鞋",
+        "ShowMessage": "小心领导穿你小鞋！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1029",
+        "Note": "14 - 以后会不会啃老啊？",
+        "ShowMessage": "以后会不会啃老啊？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1030",
+        "Note": "15 - 这样混，书都白读了",
+        "ShowMessage": "这样混，书都白读了！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1031",
+        "Note": "16 - 你挣这点算什么？",
+        "ShowMessage": "你挣这点钱算什么？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1032",
+        "Note": "17 - 考公上岸，光宗耀祖",
+        "ShowMessage": "考个公，光宗耀祖！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1033",
+        "Note": "18 - 早该开始备考啦",
+        "ShowMessage": "早可以开始备考啦！",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1034",
+        "Note": "20 - 相信长辈",
+        "ShowMessage": "我知道有些话你不爱听",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "1035",
+        "Note": "21 - 以后别后悔",
+        "ShowMessage": "为什么不相信长辈？",
+        "EventType": 1,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "2001",
+        "Note": "1 - 半扇人",
+        "ShowMessage": "以后别后悔!",
+        "EventType": 20,
+        "SoundFile": "2001.0"
+    },
+    {
+        "EventId": "2002",
+        "Note": "2 - 等我找到我的另半扇呗",
+        "ShowMessage": "不然半扇人回来？",
+        "EventType": 20,
+        "SoundFile": "2002.0"
+    },
+    {
+        "EventId": "2003",
+        "Note": "3 - 你缺个马不也挺好的？",
+        "ShowMessage": "等我找到我的另半扇",
+        "EventType": 20,
+        "SoundFile": "2003.0"
+    },
+    {
+        "EventId": "2004",
+        "Note": "4 - 全靠您衬托",
+        "ShowMessage": "你缺个马也挺好的",
+        "EventType": 20,
+        "SoundFile": "2004.0"
+    },
+    {
+        "EventId": "2005",
+        "Note": "5 - 喜欢有家的",
+        "ShowMessage": "全靠大姨衬托",
+        "EventType": 20,
+        "SoundFile": "2005.0"
+    },
+    {
+        "EventId": "2006",
+        "Note": "6 - 猪圈里那个谁也和你挺配的",
+        "ShowMessage": "有家的",
+        "EventType": 20,
+        "SoundFile": "2006.0"
+    },
+    {
+        "EventId": "2007",
+        "Note": "7 - 那你还配和我说话？",
+        "ShowMessage": "猪场里那个谁也和你挺配",
+        "EventType": 20,
+        "SoundFile": "2007.0"
+    },
+    {
+        "EventId": "2008",
+        "Note": "8 - 所以她上不了大学呀",
+        "ShowMessage": "那你还配和我说话？",
+        "EventType": 20,
+        "SoundFile": "2008.0"
+    },
+    {
+        "EventId": "2009",
+        "Note": "9 - 等我的另一半离婚吧",
+        "ShowMessage": "所以她没上大学",
+        "EventType": 20,
+        "SoundFile": "2009.0"
+    },
+    {
+        "EventId": "2010",
+        "Note": "10 - 回家等通知呗",
+        "ShowMessage": "等我的另半扇离婚",
+        "EventType": 20,
+        "SoundFile": "2010.0"
+    },
+    {
+        "EventId": "2011",
+        "Note": "11 - 我不也没人要吗？",
+        "ShowMessage": "等组织通知",
+        "EventType": 20,
+        "SoundFile": "2011.0"
+    },
+    {
+        "EventId": "2012",
+        "Note": "12 - 那你咋还不开席啊？",
+        "ShowMessage": "我不也没人要？",
+        "EventType": 20,
+        "SoundFile": "2012.0"
+    },
+    {
+        "EventId": "2013",
+        "Note": "13 - 你儿子也没养你啊",
+        "ShowMessage": "那你咋还不开席？",
+        "EventType": 20,
+        "SoundFile": "2013.0"
+    },
+    {
+        "EventId": "2014",
+        "Note": "14 - 哇，还有三星通关！",
+        "ShowMessage": "你儿子也没养你啊？",
+        "EventType": 20,
+        "SoundFile": "2014.0"
+    },
+    {
+        "EventId": "2015",
+        "Note": "15 - 像你一样到处问",
+        "ShowMessage": "还有三星通关？",
+        "EventType": 20,
+        "SoundFile": "2015.0"
+    },
+    {
+        "EventId": "2016",
+        "Note": "1 - 怕你们太闲了",
+        "ShowMessage": "像你一样到处问",
+        "EventType": 20,
+        "SoundFile": "2016.0"
+    },
+    {
+        "EventId": "2017",
+        "Note": "2 - 乡毋宁",
+        "ShowMessage": "乡毋宁",
+        "EventType": 20,
+        "SoundFile": "2017.0"
+    },
+    {
+        "EventId": "2018",
+        "Note": "3 - 捐给问题老人了",
+        "ShowMessage": "捐给问题老人了",
+        "EventType": 20,
+        "SoundFile": "2018.0"
+    },
+    {
+        "EventId": "2019",
+        "Note": "4 - 反正能用麻袋装",
+        "ShowMessage": "反正能用麻袋装",
+        "EventType": 20,
+        "SoundFile": "2019.0"
+    },
+    {
+        "EventId": "2020",
+        "Note": "5 - 攒了也不给你花",
+        "ShowMessage": "攒了也不给你花",
+        "EventType": 20,
+        "SoundFile": "2020.0"
+    },
+    {
+        "EventId": "2021",
+        "Note": "6 - 家里没人吗？",
+        "ShowMessage": "家里有人还生娃",
+        "EventType": 20,
+        "SoundFile": "2021.0"
+    },
+    {
+        "EventId": "2022",
+        "Note": "7 - 你再看看？",
+        "ShowMessage": "你再看看？",
+        "EventType": 20,
+        "SoundFile": "2022.0"
+    },
+    {
+        "EventId": "2023",
+        "Note": "8 - 人也要入土的",
+        "ShowMessage": "人也要入土的",
+        "EventType": 20,
+        "SoundFile": "2023.0"
+    },
+    {
+        "EventId": "2024",
+        "Note": "9 - 图图老板他全家！",
+        "ShowMessage": "图图老板他全家",
+        "EventType": 20,
+        "SoundFile": "2024.0"
+    },
+    {
+        "EventId": "2025",
+        "Note": "10 - 凉拌",
+        "ShowMessage": "凉拌",
+        "EventType": 20,
+        "SoundFile": "2025.0"
+    },
+    {
+        "EventId": "2026",
+        "Note": "11 - 他还没给我送呢",
+        "ShowMessage": "他还没给我送呢",
+        "EventType": 20,
+        "SoundFile": "2026.0"
+    },
+    {
+        "EventId": "2027",
+        "Note": "12 - 领导也不是人啊",
+        "ShowMessage": "领导也不是人啊",
+        "EventType": 20,
+        "SoundFile": "2027.0"
+    },
+    {
+        "EventId": "2028",
+        "Note": "13 - 他自己没鞋吗？",
+        "ShowMessage": "他自己没鞋吗？",
+        "EventType": 20,
+        "SoundFile": "2028.0"
+    },
+    {
+        "EventId": "2029",
+        "Note": "14 - 有人还没老啃呢",
+        "ShowMessage": "谁没老啃我不说",
+        "EventType": 20,
+        "SoundFile": "2029.0"
+    },
+    {
+        "EventId": "2030",
+        "Note": "15 - 那你赔我钱啊",
+        "ShowMessage": "那你赔我钱？",
+        "EventType": 20,
+        "SoundFile": "2030.0"
+    },
+    {
+        "EventId": "2031",
+        "Note": "16 - 算我命好",
+        "ShowMessage": "算我命好",
+        "EventType": 20,
+        "SoundFile": "2031.0"
+    },
+    {
+        "EventId": "2032",
+        "Note": "17 - 备比的东西",
+        "ShowMessage": "备比的东西",
+        "EventType": 20,
+        "SoundFile": "2032.0"
+    },
+    {
+        "EventId": "2033",
+        "Note": "18 - 那你还说？",
+        "ShowMessage": "那你还说？",
+        "EventType": 20,
+        "SoundFile": "2033.0"
+    },
+    {
+        "EventId": "2034",
+        "Note": "19 - 不熟",
+        "ShowMessage": "真不熟啊",
+        "EventType": 20,
+        "SoundFile": "2034.0"
+    },
+    {
+        "EventId": "2035",
+        "Note": "20 - 那以后再说咯",
+        "ShowMessage": "你先有以后再说",
+        "EventType": 20,
+        "SoundFile": "2035.0"
+    },
+    {
+        "EventId": "2100",
+        "Note": "已读乱回",
+        "ShowMessage": "",
+        "EventType": 21,
+        "SoundFile": ""
+    },
+    {
+        "EventId": "2200",
+        "Note": "沉默吃饭",
+        "ShowMessage": "",
+        "EventType": 22,
+        "SoundFile": ""
     }
 ]

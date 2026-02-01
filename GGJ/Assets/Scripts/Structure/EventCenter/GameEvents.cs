@@ -27,7 +27,7 @@ public class GameEvents
     
     /// <summary>
     /// 播放语音事件
-    /// 参数：string - 语音名称/ID
+    /// 参数：int - 语音名称/ID
     /// </summary>
     public const string OnPlayVoice = "OnPlayVoice";
     
@@ -36,4 +36,32 @@ public class GameEvents
     /// 参数：string - 表情包类型（如 "PerfectReply", "NormalEmoji", "HurtChaos" 等）
     /// </summary>
     public const string OnShowEmoji = "OnShowEmoji";
+
+
+    //接口
+
+    /// <summary>
+    /// 关卡结算
+    /// 参数：StageEndData - 关卡结束数据
+    /// </summary>
+    public const string OnStageEnd = "OnStageEnd";
+
+    /// <summary>
+    /// Boss 行动事件
+    /// 参数：string - 需要漂浮的弹幕设置
+    /// </summary>
+    public const string OnBossAction = "OnBossAction";
+
+
+    /// <summary>
+    /// 播放随机音效
+    /// </summary>
+    public const string PlayRandomVoice = "PlayRandomVoice";
+
+    //Player的气泡
+    public const string PlayerMSG = "PlayerMSG";
+
+
+    //停止关卡
+    public const string StopGame = "StopGame";
 }

@@ -13,11 +13,179 @@ MonoBehaviour:
   m_Name: SoundData
   m_EditorClassIdentifier: 
   bgmList:
-  - bgmName: Level1
-    clip: {fileID: 8300000, guid: a611866117e467b458bd599175d8b117, type: 3}
+  - bgmName: Level1_BGM
+    clip: {fileID: 8300000, guid: 18fe30f58c0c6b34faf098686f64c779, type: 3}
+    volume: 1
+    loop: 1
+  - bgmName: Level1_BOSS
+    clip: {fileID: 8300000, guid: f7ab0162a7eb5fe43aea879beba87666, type: 3}
+    volume: 1
+    loop: 1
+  - bgmName: Level1_Stereo
+    clip: {fileID: 8300000, guid: d834be95a02f36243b11c951940400e6, type: 3}
+    volume: 1
+    loop: 1
+  - bgmName: Level2_BGM
+    clip: {fileID: 8300000, guid: f57f76788b7dec4419fa563c4a687868, type: 3}
+    volume: 1
+    loop: 1
+  - bgmName: Level12_BOSS
+    clip: {fileID: 8300000, guid: d5e0262eb715d2c44bb08f039e668322, type: 3}
+    volume: 1
+    loop: 1
+  - bgmName: Level2_Stereo
+    clip: {fileID: 8300000, guid: 36e265f9d072bad40ab7855a06e882ed, type: 3}
     volume: 1
     loop: 1
   soundEffectList:
+  - soundName: 2001
+    clip: {fileID: 8300000, guid: 2d08e9947ec51b949b3a0d6fe9a24390, type: 3}
+    volume: 1
+  - soundName: 2002
+    clip: {fileID: 8300000, guid: 73f2f97dce876cd40957c078a79634a6, type: 3}
+    volume: 1
+  - soundName: 2003
+    clip: {fileID: 8300000, guid: eaa19f2553ae9dc4e99368970a904ab3, type: 3}
+    volume: 1
+  - soundName: 2004
+    clip: {fileID: 8300000, guid: 777e6ad8ce3271b4dbcd4afa1c57fa22, type: 3}
+    volume: 1
+  - soundName: 2005
+    clip: {fileID: 8300000, guid: 93834135ea9b46643843a8f493772261, type: 3}
+    volume: 1
+  - soundName: 2006
+    clip: {fileID: 8300000, guid: 95b712b5343be334a8860fe5f644e17f, type: 3}
+    volume: 1
+  - soundName: 2007
+    clip: {fileID: 8300000, guid: c7a9cc00b198a1e49b989b3bca186f4b, type: 3}
+    volume: 1
+  - soundName: 2008
+    clip: {fileID: 8300000, guid: f018778f89030d54a93a5df79513ca41, type: 3}
+    volume: 1
+  - soundName: 2009
+    clip: {fileID: 8300000, guid: dc725a9b1d3af254aa12601175ebb432, type: 3}
+    volume: 1
+  - soundName: 2010
+    clip: {fileID: 8300000, guid: bf1734a7d7b984d41a4a2ff6b9c5d249, type: 3}
+    volume: 1
+  - soundName: 2011
+    clip: {fileID: 8300000, guid: 30927aa95fc4eb6478ee5b5a6aa94fa0, type: 3}
+    volume: 1
+  - soundName: 2012
+    clip: {fileID: 8300000, guid: 64deb866ec77b09459bd2beb47f1e9d3, type: 3}
+    volume: 1
+  - soundName: 2013
+    clip: {fileID: 8300000, guid: 6e4d24ae0893fe04b9b20eb64346843c, type: 3}
+    volume: 1
+  - soundName: 2014
+    clip: {fileID: 8300000, guid: bb70b947ee412fc419425d34ac691c10, type: 3}
+    volume: 1
+  - soundName: 2015
+    clip: {fileID: 8300000, guid: 4e4acb7e263aea24489cddb3d0330d18, type: 3}
+    volume: 1
+  - soundName: 2016
+    clip: {fileID: 8300000, guid: bef89372fe321c3498a68de82da472a9, type: 3}
+    volume: 1
+  - soundName: 2017
+    clip: {fileID: 8300000, guid: 24b59163a0b0a654182c2392bd0f58af, type: 3}
+    volume: 1
+  - soundName: 2018
+    clip: {fileID: 8300000, guid: dbf2608159f177f499015f46ff6868b9, type: 3}
+    volume: 1
+  - soundName: 2019
+    clip: {fileID: 8300000, guid: 99d934428fe2d2e47b7a2bd6f0621d4e, type: 3}
+    volume: 1
+  - soundName: 2020
+    clip: {fileID: 8300000, guid: 8379887e104c15949aa6283c2101fbcb, type: 3}
+    volume: 1
+  - soundName: 2021
+    clip: {fileID: 8300000, guid: 0e33d67b489089b4cabd93b9e7a0ffcb, type: 3}
+    volume: 1
+  - soundName: 2022
+    clip: {fileID: 8300000, guid: 37bfe9e49a979464e894a990fed05ba8, type: 3}
+    volume: 1
+  - soundName: 2023
+    clip: {fileID: 8300000, guid: 7e55a58310c6fa8438e8104cb55431f4, type: 3}
+    volume: 1
+  - soundName: 2024
+    clip: {fileID: 8300000, guid: 8681dfb777b0165429e77a5f53dd7067, type: 3}
+    volume: 1
+  - soundName: 2025
+    clip: {fileID: 8300000, guid: c86b96705e79a464992aaeb86b82add2, type: 3}
+    volume: 1
+  - soundName: 2026
+    clip: {fileID: 8300000, guid: 0b72897dc0d7eb84a83b64065dbeae23, type: 3}
+    volume: 1
+  - soundName: 2027
+    clip: {fileID: 8300000, guid: d2d103c61ccd12345a1c05f4288cc953, type: 3}
+    volume: 1
+  - soundName: 2028
+    clip: {fileID: 8300000, guid: 2bc70512547f5ce4ca7216f1690cbc3a, type: 3}
+    volume: 1
+  - soundName: 2029
+    clip: {fileID: 8300000, guid: 940350078a5180e46830014a36414eed, type: 3}
+    volume: 1
+  - soundName: 2030
+    clip: {fileID: 8300000, guid: 3b3cfbdb7fd6d5c42ab86ef767acd498, type: 3}
+    volume: 1
+  - soundName: 2031
+    clip: {fileID: 8300000, guid: a942d4b78fbcd704584ac2c3ef48ad73, type: 3}
+    volume: 1
+  - soundName: 2032
+    clip: {fileID: 8300000, guid: a3413557366347a44ba10c26a93b4248, type: 3}
+    volume: 1
+  - soundName: 2033
+    clip: {fileID: 8300000, guid: c57573be3dea5f8409836dd879dc23aa, type: 3}
+    volume: 1
+  - soundName: 2034
+    clip: {fileID: 8300000, guid: b74d14bf6f289484fb320d24669f4384, type: 3}
+    volume: 1
+  - soundName: 2035
+    clip: {fileID: 8300000, guid: 2eff85bc971d9714b9a4dca28580574f, type: 3}
+    volume: 1
   - soundName: Press
-    clip: {fileID: 8300000, guid: 14202d6513495944f888f04436ce4866, type: 3}
+    clip: {fileID: 8300000, guid: c27cbf1ba5f252c4db9e2853238ec163, type: 3}
+    volume: 1
+  - soundName: sfx_q
+    clip: {fileID: 8300000, guid: e34bee92f66eb94439060df6d89b2280, type: 3}
+    volume: 1
+  - soundName: sfx_w
+    clip: {fileID: 8300000, guid: ccbcbdf3b7f014c4c8d7aeee61149102, type: 3}
+    volume: 1
+  - soundName: sfx_e
+    clip: {fileID: 8300000, guid: 6a3bc15f31082cb43a97602c3ec77986, type: 3}
+    volume: 1
+  - soundName: sfx_good
+    clip: {fileID: 8300000, guid: 509c504a474f1c44c8c02902c9df58ba, type: 3}
+    volume: 1
+  audioPool:
+  - audioID: 2101
+    clip: {fileID: 8300000, guid: 17e78f1712cfe814a8f8ced28db453c2, type: 3}
+    volume: 1
+  - audioID: 2102
+    clip: {fileID: 8300000, guid: 779aed1790ed517458196c0232e4796c, type: 3}
+    volume: 1
+  - audioID: 2103
+    clip: {fileID: 8300000, guid: b8bf32e308885a141b0d658b5fea3e36, type: 3}
+    volume: 1
+  - audioID: 2104
+    clip: {fileID: 8300000, guid: ea061884e9f220c4cac060e458dd1510, type: 3}
+    volume: 1
+  - audioID: 2105
+    clip: {fileID: 8300000, guid: d99c18bc0c18be04091244d692dc21b6, type: 3}
+    volume: 1
+  - audioID: 2106
+    clip: {fileID: 8300000, guid: a0c131a09419798458f10d811d042f62, type: 3}
+    volume: 1
+  - audioID: 2107
+    clip: {fileID: 8300000, guid: cfcffbf4ea69c034eaa600ba8fd0c96d, type: 3}
+    volume: 1
+  - audioID: 2108
+    clip: {fileID: 8300000, guid: 435b91e87906a8e46880c801f593f5de, type: 3}
+    volume: 1
+  - audioID: 2109
+    clip: {fileID: 8300000, guid: b099b3314ab5a3c4cbec2ab1191f65b6, type: 3}
+    volume: 1
+  - audioID: 2110
+    clip: {fileID: 8300000, guid: 40c8fccf79a6bc44bb09a107387c4977, type: 3}
     volume: 1

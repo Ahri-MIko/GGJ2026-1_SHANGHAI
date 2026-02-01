@@ -1266,7 +1266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stages: []
   events: []
-  constants: []
   debugLevelID: 1
 --- !u!4 &959391257
 Transform:
@@ -1787,13 +1786,13 @@ MonoBehaviour:
   timeBar: {fileID: 550196041}
   potManager: {fileID: 1953026811}
   eviation: {fileID: 873439019}
-  bpm: 120
+  bpm: 240
   beatsPerBar: 8
   perfectThresholdMs: 60
   greatThresholdMs: 90
   goodThresholdMs: 90
   audioLatencyMs: 250
-  startOffset: 0.25
+  startOffset: 0
   autoStart: 1
   isPlaying: 0
   isInPreparation: 0

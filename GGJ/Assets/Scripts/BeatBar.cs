@@ -70,7 +70,6 @@ public class BeatBar : MonoBehaviour
 
     List<StageData> stages = new List<StageData>();
     List<EventData> events = new List<EventData>();
-    List<ConstantData> constants = new List<ConstantData>();
 
     // 私有变量
     private float distance;             // 左右边界的距离（世界坐标）
@@ -84,18 +83,36 @@ public class BeatBar : MonoBehaviour
     private bool[] beatTriggered;       // 记录每个节拍是否已触发（避免重复触发）
     private bool[] beatJudged;          // 记录每个节拍是否已被判定（避免重复判定）
     private bool[] beatAudioScheduled;  // 记录每个节拍的音频是否已调度
+    private bool[] beatAudioEnemy;      // 记录记录每个节拍的音频是否已调度(敌人的)
     private double beatInterval;        // 每个节拍的时间间隔（秒）
-    private const double BEAT_TRIGGER_THRESHOLD = 0.02; // 节拍触发阈值（20毫秒容差）
+    private const double BEAT_TRIGGER_THRESHOLD = 0.001; // 节拍触发阈值（20毫秒容差）
+
+    // 判定统计
+    private int perfectCount = 0;
+    private int greatCount = 0;
+    private int goodCount = 0;
+    private int missCount = 0;
 
 
     private void Start()
     {
         Initialize();
         
+        // 注册事件
+        EventCenter.Instance.AddEventListener(GameEvents.StopGame, OnStopGame);
+        EventCenter.Instance.AddEventListener(GameEvents.ResumeGame, OnResumeGame);
+        
         if (autoStart)
         {
             StartGame();
         }
+    }
+
+    private void OnDestroy()
+    {
+        // 注销事件
+        EventCenter.Instance.RemoveEventListener(GameEvents.StopGame, OnStopGame);
+        EventCenter.Instance.RemoveEventListener(GameEvents.ResumeGame, OnResumeGame);
     }
 
     private void Update()
@@ -161,6 +178,22 @@ public class BeatBar : MonoBehaviour
     }
 
     /// <summary>
+    /// 事件处理：停止游戏
+    /// </summary>
+    private void OnStopGame()
+    {
+        Stop();
+    }
+
+    /// <summary>
+    /// 事件处理：重新开始游戏
+    /// </summary>
+    private void OnResumeGame()
+    {
+        Restart();
+    }
+
+    /// <summary>
     /// 实时检查是否有错过的按键
     /// </summary>
     private void CheckMissedBeats()
@@ -195,8 +228,25 @@ public class BeatBar : MonoBehaviour
             double goodThresholdSec = goodThresholdMs / 1000.0;
             if (timePassed > goodThresholdSec)
             {
+                // 检查是否是特殊判定
+                int eventId = 0;
+                Category category = Category.Generic;
+                if (levelBlackBoard != null)
+                {
+                    eventId = levelBlackBoard.GetPlayerEventByBeat(roundIndex, beatIndex);
+                    if (eventId != 0)
+                    {
+                        category = Category.Specific;
+                    }
+                }
+
+                string tx = "";
+                if(category == Category.Specific)
+                {
+                    tx = levelBlackBoard.GetShowMessageByEventId(eventId);
+                }
                 // 标记为超时Miss
-                JudgementResult missResult = new JudgementResult(JudgementLevel.Miss, beatIndex, goodThresholdMs / 1000.0, "");
+                JudgementResult missResult = new JudgementResult(JudgementLevel.Miss, beatIndex, goodThresholdMs / 1000.0, "", category, eventId, tx);
                 ProcessJudgement(missResult);
             }
         }
@@ -253,6 +303,7 @@ public class BeatBar : MonoBehaviour
         beatTriggered = new bool[beatsPerBar];
         beatJudged = new bool[beatsPerBar];
         beatAudioScheduled = new bool[beatsPerBar];
+        beatAudioEnemy = new bool[beatsPerBar];
     }
 
     /// <summary>
@@ -314,7 +365,34 @@ public class BeatBar : MonoBehaviour
                     }
                 }
             }
-            
+
+
+            if (!beatAudioEnemy[beatIndex] && elapsedTime >= targetBeatTime - audioLatencySeconds)
+            {
+                // 检查是否是 BossBeat，如果是则触发 BossAction 事件
+                if (levelBlackBoard != null && levelBlackBoard.IsBossBeat(roundIndex, beatIndex))
+                {
+                    int bossAEvent = levelBlackBoard.GetBossAEvent(roundIndex);
+                    string bossMSG = levelBlackBoard.GetShowMessageByEventId(bossAEvent);
+                    string soundName = levelBlackBoard.GetSoundFileByEventId(bossAEvent);
+                    if (bossAEvent != -1 && bossAEvent != 0)
+                    {
+                        beatAudioEnemy[beatIndex] = true;
+                        //敌人信息打印
+                        EventCenter.Instance.EventTrigger(GameEvents.OnBossAction, bossMSG);
+                        if (!string.IsNullOrEmpty(soundName))
+                        {
+                            //播放相关音效
+                            AudioManager.Instance.PlaySound(soundName);
+                        }
+                        //AudioManager.Instance.PlaySound("Press");
+
+                        Debug.Log($"触发 Boss 行动: Round {roundIndex}, Beat {beatIndex}, EventID {bossAEvent}");
+                    }
+                }
+            }
+
+
             // 如果这个节拍已经触发过，跳过
             if (beatTriggered[beatIndex])
                 continue;
@@ -327,6 +405,15 @@ public class BeatBar : MonoBehaviour
 
                 // 触发节拍事件
                 OnBeatHit(beatIndex, elapsedTime - targetBeatTime);
+                
+                // 当 beatIndex >= 3 时，更新 beatIndex - 2 的锅盖状态
+                // 显示下一轮的状态
+                if (beatIndex >= 3)
+                {
+                    int potToUpdate = beatIndex - 2;  // 要更新的锅的索引（1-7）
+                    int nextRound = roundIndex + 1;   // 下一轮
+                    UpdateSinglePot(potToUpdate, nextRound);
+                }
             }
         }
     }
@@ -359,6 +446,14 @@ public class BeatBar : MonoBehaviour
                 beatAudioScheduled[i] = false;
             }
         }
+
+        if(beatAudioEnemy != null)
+        {
+            for( int i = 0;i < beatAudioEnemy.Length; i++)
+            {
+                beatAudioEnemy[i] = false;
+            }
+        }
     }
 
     /// <summary>
@@ -385,14 +480,23 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     private void OnCycleComplete()
     {
-        //需要判断游戏是否结束,这是不是最后一个拍
+        // 检查游戏是否结束
+        if (levelBlackBoard != null)
+        {
+            int totalRounds = levelBlackBoard.GetTotalRounds();
+            if (roundIndex >= totalRounds)
+            {
+                Stop(); // 结束关卡
+                return;
+            }
+        }
 
         roundIndex++;
         roundController.SetRound(roundIndex);
         
         // 重置所有节拍状态（包括音频调度）
         ResetBeatTriggers();
-        
+
         // 更新锅盖显示
         UpdatePotDisplay();
     }
@@ -427,6 +531,37 @@ public class BeatBar : MonoBehaviour
     }
 
     /// <summary>
+    /// 更新单个锅的显示状态
+    /// </summary>
+    /// <param name="potIndex">锅的索引（1-7）</param>
+    /// <param name="targetRound">要显示的目标轮次</param>
+    private void UpdateSinglePot(int potIndex, int targetRound)
+    {
+        if (potManager == null || levelBlackBoard == null)
+            return;
+        
+        // 先显示这个锅（默认有盖子）
+        potManager.ShowPot(potIndex);
+        
+        // 获取目标轮次的 PlayerBeat 数据
+        int[] targetBeats = levelBlackBoard.GetPlayerBeats(targetRound);
+        
+        // 如果目标轮次需要按这个锅，则隐藏锅盖
+        if (targetBeats != null && targetBeats.Length > 0)
+        {
+            foreach (int beatIndex in targetBeats)
+            {
+                if (beatIndex == potIndex)
+                {
+                    potManager.HidePot(potIndex);
+                    Debug.Log($"更新锅 {potIndex}: 显示轮次 {targetRound} 的状态（隐藏锅盖）");
+                    break;
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// 节拍命中回调 - 当TimeBar到达某个节拍点时触发
     /// </summary>
     /// <param name="beatIndex">节拍索引（1到beatsPerBar-1）</param>
@@ -442,6 +577,8 @@ public class BeatBar : MonoBehaviour
         // 转换为毫秒显示
         double deviationMs = deviation * 1000;
         Debug.Log($"节拍命中: Beat {beatIndex}/{beatsPerBar}, Round {roundIndex}, 偏差: {deviationMs:F2}ms, DSP时间: {AudioSettings.dspTime:F4}");
+        
+
         
         // 显示箭头位置
         if (potManager != null)
@@ -506,8 +643,22 @@ public class BeatBar : MonoBehaviour
             // 判定等级
             JudgementLevel level = CalculateJudgementLevel(System.Math.Abs(nearestDeviation));
             
+            // 判断是否是特殊判定
+            int eventId = 0;
+            Category category = Category.Generic;
+            string tx = "";
+            if (levelBlackBoard != null)
+            {
+                eventId = levelBlackBoard.GetPlayerEventByBeat(roundIndex, nearestBeat);
+                if (eventId != 0)
+                {
+                    category = Category.Specific;
+                    tx = levelBlackBoard.GetShowMessageByEventId(eventId);
+                }
+            }
+            
             // 创建判定结果（包含按键信息）
-            JudgementResult result = new JudgementResult(level, nearestBeat, nearestDeviation, letter);
+            JudgementResult result = new JudgementResult(level, nearestBeat, nearestDeviation, letter, category, eventId, tx);
             
             // 处理判定
             ProcessJudgement(result);
@@ -547,9 +698,26 @@ public class BeatBar : MonoBehaviour
             return;
         }
         
-        
         // 标记该节拍已被判定
         beatJudged[result.BeatIndex] = true;
+        
+        // 统计判定结果
+        switch (result.Level)
+        {
+            case JudgementLevel.Perfect:
+                perfectCount++;
+                break;
+            case JudgementLevel.Great:
+                greatCount++;
+                break;
+            case JudgementLevel.Good:
+                // Good 算进 Miss 里面
+                missCount++;
+                break;
+            case JudgementLevel.Miss:
+                missCount++;
+                break;
+        }
         
         // 更新偏差显示（Miss不更新）
         if (result.Level != JudgementLevel.Miss && eviation != null)
@@ -594,7 +762,7 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        AudioManager.Instance.PlayBGM("Level1");
+        AudioManager.Instance.PlayBGM("Level1_Stereo");//这里需要指定歌曲
         double currentTime = AudioSettings.dspTime;
         gameStartTime = currentTime + startOffset;
         cycleStartTime = gameStartTime;
@@ -689,20 +857,25 @@ public class BeatBar : MonoBehaviour
     }
 
     /// <summary>
-    /// 停止并重置
+    /// 停止并重置（用于结束关卡）
     /// </summary>
     public void Stop()
     {
         isPlaying = false;
         isInPreparation = false;
         pausedDuration = 0;
-        ResetPosition();
         
         // 停止BGM（如果AudioManager存在）
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.StopBGM();
         }
+        
+        // 重置位置
+        ResetPosition();
+
+        
+        EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd,new StageEndData(perfectCount,greatCount,missCount));
     }
 
     /// <summary>
@@ -722,6 +895,9 @@ public class BeatBar : MonoBehaviour
         
         // 重置所有节拍状态
         ResetBeatTriggers();
+        
+        // 重置统计数据
+        ResetStatistics();
         
         // 初始化偏差显示为等待状态
         if (eviation != null)
@@ -809,6 +985,42 @@ public class BeatBar : MonoBehaviour
     public bool IsPlaying()
     {
         return isPlaying;
+    }
+    
+    /// <summary>
+    /// 获取 Perfect 数量
+    /// </summary>
+    public int GetPerfectCount()
+    {
+        return perfectCount;
+    }
+    
+    /// <summary>
+    /// 获取 Great 数量
+    /// </summary>
+    public int GetGreatCount()
+    {
+        return greatCount;
+    }
+    
+    /// <summary>
+    /// 获取 Miss 数量（包含 Good 和 Miss）
+    /// </summary>
+    public int GetMissCount()
+    {
+        return missCount;
+    }
+    
+    /// <summary>
+    /// 重置统计数据
+    /// </summary>
+    public void ResetStatistics()
+    {
+        perfectCount = 0;
+        greatCount = 0;
+        goodCount = 0;
+        missCount = 0;
+        Debug.Log("统计数据已重置");
     }
 
     #endregion
