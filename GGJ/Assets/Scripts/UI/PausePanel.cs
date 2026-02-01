@@ -65,7 +65,7 @@ public class PausePanel : BasePanel
     private void OnRestartClicked()
     {
         // 恢复时间 (非常重要！否则重开后游戏是暂停的)
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         AudioListener.pause = false;
 
         // 重新加载当前场景
@@ -75,7 +75,7 @@ public class PausePanel : BasePanel
     private void OnQuitClicked()
     {
         // 恢复时间
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         AudioListener.pause = false;
 
         // 通知 UIManager 切换回标题画面

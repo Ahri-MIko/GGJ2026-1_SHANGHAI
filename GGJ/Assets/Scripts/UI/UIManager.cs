@@ -19,8 +19,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ResultPanel resultPanel;     // 拖拽 ResultPanel
     [SerializeField] private PausePanel pausePanel;
     [SerializeField] private SettingsPanel settingsPanel;
+    [SerializeField] private TutorialPanel tutorialPanel;
 
-    
+
 
     void Awake()
     {
@@ -36,11 +37,25 @@ public class UIManager : MonoBehaviour
         AudioListener.volume = savedVolume;
 
         string sceneName = SceneManager.GetActiveScene().name;
-        
-        if (sceneName == "UITest01")
+
+        if (sceneName == "UITest01") // 或者你的 TitleScene 名字
         {
-            ShowStartPanel(); // 在標題場景，只顯示開始介面
+            // 1. 始终显示开始界面
+            ShowStartPanel();
+
+            // 2. 【核心修改】检查是否看过教学
+            // GetInt 第一个参数是 Key，第二个参数是默认值 (0代表没看过)
+            if (PlayerPrefs.GetInt("HasSeenTutorial", 0) == 0)
+            {
+                ShowTutorialPanel();
+            }
+            else
+            {
+                // 如果看过，确保它隐藏（防止在编辑器里忘了关）
+                if (tutorialPanel) tutorialPanel.Hide();
+            }
         }
+     
         else if (sceneName == "UITest02")
         {
             // 在遊戲場景，隱藏開始介面，顯示戰鬥介面
@@ -51,6 +66,17 @@ public class UIManager : MonoBehaviour
             // GameManager.Instance.StartLevel(); 
         }
     }
+
+    private void Update()
+    {
+        // 开发作弊码：按下 F12 清除教学记录
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            PlayerPrefs.DeleteKey("HasSeenTutorial");
+            Debug.Log("教学记录已重置！下次启动会再次显示。");
+        }
+    }
+
     public void LoadScene(SceneName scene)
     {
         // 枚举转字符串
@@ -124,8 +150,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 弹出表情包
+    /// </summary>
+    /// <param name="emojiID">你在 Inspector 里填的 ID，例如 "Angry"</param>
+    /// <param name="targetPos">如果不填，默认出现在屏幕中间</param>
+    public void ShowEmoji(string emojiID, Vector3? targetPos = null)
+    {
+        if (gameplayPanel != null)
+        {
+            // 如果没传位置，默认取屏幕中心 (或者你可以指定 Boss 的位置)
+            Vector3 finalPos = targetPos.HasValue ? targetPos.Value : new Vector3(Screen.width / 2, Screen.height / 2, 0);
+
+            gameplayPanel.SpawnEmoji(emojiID, finalPos);
+        }
+    }
     #endregion
-    
+
     #region 4. 面板调用
     public void ShowStartPanel()
     {
@@ -133,13 +174,19 @@ public class UIManager : MonoBehaviour
         if (startPanel) startPanel.Show();
         if (gameplayPanel) gameplayPanel.Hide();
         if (resultPanel) resultPanel.Hide();
-        
+   
+    }
 
-       
+    public void ShowTutorialPanel()
+    {
+        if ((tutorialPanel != null))
+        {
+            tutorialPanel.Show();
+        }
     }
 
     // 当点击“开始游戏”按钮时触发
-    public void OnStartGameUI()
+    public void OnStartLevel01()
     {
         // 1. UI 层面：隐藏开始，显示战斗
         //if (startPanel) startPanel.Hide();
@@ -147,6 +194,17 @@ public class UIManager : MonoBehaviour
         // 2. 逻辑层面：通知另一位程序同学的 GameManager
         // GameManager.Instance.StartGameLogic(); 
         LoadScene(SceneName.UITest02);
+        Debug.Log("UI状态已切换：进入战斗");
+    }
+
+    public void OnStartLevel02()
+    {
+        // 1. UI 层面：隐藏开始，显示战斗
+        //if (startPanel) startPanel.Hide();
+        //if (gameplayPanel) gameplayPanel.Show();
+        // 2. 逻辑层面：通知另一位程序同学的 GameManager
+        // GameManager.Instance.StartGameLogic(); 
+        LoadScene(SceneName.UITest03);
         Debug.Log("UI状态已切换：进入战斗");
     }
 
@@ -173,14 +231,16 @@ public class UIManager : MonoBehaviour
         pausePanel.gameObject.SetActive(false);
 
         // 2. 关闭游戏界面
-        if (gameplayPanel) gameplayPanel.Hide();
-        if (resultPanel) resultPanel.Hide();
+        //if (gameplayPanel) gameplayPanel.Hide();
+        //if (resultPanel) resultPanel.Hide();
 
         // 3. 打开标题界面
-        if (startPanel) startPanel.Show();
+        //if (startPanel) startPanel.Show();
 
         // 4. 通知逻辑层重置 (可选)
         // GameManager.Instance.ResetGame();
+
+        LoadScene(SceneName.UITest01);  
     }
 
     // 打开设置 (给标题界面的“设置”按钮，或者游戏中的暂停界面用)

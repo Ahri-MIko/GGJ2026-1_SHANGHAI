@@ -168,18 +168,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1990762904924078599, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1990762904924078599, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1990762904924078599, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1990762904924078599, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -227,8 +215,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6660552146551354195, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
-      propertyPath: m_Alpha
+    - target: {fileID: 7770615981161182912, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -441,6 +429,11 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &1428339941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 741959352624569221, guid: ada538b6f81757648a217a8115c0b30d, type: 3}
+  m_PrefabInstance: {fileID: 78751361}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2520491126459879005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -457,6 +450,10 @@ PrefabInstance:
       propertyPath: testCube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8080785237273956660, guid: 7e2ea09a491660f42a633bd6ee0c29da, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1428339941}
     - target: {fileID: 9163094979251223371, guid: 7e2ea09a491660f42a633bd6ee0c29da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 414.61893

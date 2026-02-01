@@ -3,9 +3,12 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System;
+using System.Collections.Generic;
+using static EmojiDataStruct;
 
 public class GameplayPanel : BasePanel
 {
+ 
     public static GameplayPanel Instance;
     [Header("Pause")]
     public Button btnPause;
@@ -48,10 +51,15 @@ public class GameplayPanel : BasePanel
     public float topY = 400f;
     public float bottomY = -200f;
 
+    [Header("Emoji System")]
+    public GameObject emojiPrefab;        // 拖入 Emoji_Prefab
+    public Transform emojiContainer;      // 建议新建一个透明 Panel 专门放表情
+    public List<EmojiData> emojiLibrary;  // 在这里配置所有的表情包
+
     [Header("=== 资源配置 (美术相关) ===")]
     public Color colorPerfect = Color.red;
     public Color colorGood = Color.yellow;
-    public Color colorMiss = Color.gray;
+    public Color colorMiss = Color.black;
 
     protected override void Awake()
     {
@@ -249,7 +257,7 @@ public void UpdatePlayerHP(float percent)
         // 1. 随机高度
         float randomY = UnityEngine.Random.Range(bottomY, topY);
 
-        // 2. 随机速度 (或者根据字数决定，字多飞得慢一点让人看清)
+        // 2. 随机速度
         float duration = UnityEngine.Random.Range(minSpeed, maxSpeed);
 
         // 3. 生成并发射
@@ -262,7 +270,7 @@ public void UpdatePlayerHP(float percent)
     public void SpawnPlayerDanmaku(string text)
     {
         // 玩家的弹幕可以固定在某个高度，或者用特殊的金色
-        float fixedY = 0f; // 屏幕正中间
+        float fixedY = 200f; // 屏幕正中间
         float fastSpeed = 2.0f; // 快速反击
 
         CreateDanmaku(text, Color.yellow, fastSpeed, fixedY);
@@ -278,6 +286,38 @@ public void UpdatePlayerHP(float percent)
         {
             bullet.Fire(content, color, duration, yPos);
         }
+    }
+    #endregion
+
+    #region 5.表情包系统
+    public void SpawnEmoji(string id, Vector3 spawnPos)
+    {
+        // 1. 查找对应的 Sprite
+        Sprite targetSprite = null;
+        foreach (var data in emojiLibrary)
+        {
+            if (data.id == id)
+            {
+                targetSprite = data.sprite;
+                break;
+            }
+        }
+
+        if (targetSprite == null)
+        {
+            Debug.LogWarning($"找不到 ID 为 {id} 的表情包，请检查拼写！");
+            return;
+        }
+
+        // 2. 生成物体
+        GameObject obj = Instantiate(emojiPrefab, emojiContainer);
+
+        // 3. 设置位置 (注意：如果 emojiContainer 有 Layout Group，这行会失效，请确保 Container 只是普通 Panel)
+        obj.transform.position = spawnPos;
+
+        // 4. 初始化动画
+        EmojiObject script = obj.GetComponent<EmojiObject>();
+        if (script) script.Init(targetSprite);
     }
     #endregion
 }

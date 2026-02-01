@@ -9,6 +9,8 @@ public class Test : MonoBehaviour
     float currentHealth;
     float playerCurrentHealth;
     public Image testCube;
+    public GameObject playerTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +62,11 @@ public class Test : MonoBehaviour
         {
             playerCurrentHealth += 5;
             UIManager.Instance.UpdatePlayerHP(playerCurrentHealth / maxHealth);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            UIManager.Instance.ShowEmoji("goblin", playerTransform.transform.position);
         }
     }
 }
