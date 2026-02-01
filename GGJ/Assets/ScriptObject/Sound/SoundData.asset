@@ -22,7 +22,7 @@ MonoBehaviour:
     volume: 1
     loop: 1
   - bgmName: Level1_Stereo
-    clip: {fileID: 8300000, guid: d834be95a02f36243b11c951940400e6, type: 3}
+    clip: {fileID: 8300000, guid: 613a42e2bacd026489cd890713295419, type: 3}
     volume: 1
     loop: 1
   - bgmName: Level2_BGM
@@ -34,7 +34,7 @@ MonoBehaviour:
     volume: 1
     loop: 1
   - bgmName: Level2_Stereo
-    clip: {fileID: 8300000, guid: 36e265f9d072bad40ab7855a06e882ed, type: 3}
+    clip: {fileID: 8300000, guid: 937dc328922307c4d89af1929aaaf56a, type: 3}
     volume: 1
     loop: 1
   soundEffectList:

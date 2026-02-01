@@ -4,7 +4,7 @@ using UnityEngine;
 public class LevelBlackBoard : MonoBehaviour
 {
 
-    public static int CurrentLevelID = 1;
+    public static  int CurrentLevelID = 1;
 
 
     public List<StageData> stages = new List<StageData>();
@@ -17,7 +17,7 @@ public class LevelBlackBoard : MonoBehaviour
     {
        
         debugLevelID = CurrentLevelID;
-        stages = DataLoader.LoadStageData(LevelBlackBoard.CurrentLevelID);
+        stages = DataLoader.LoadStageData(CurrentLevelID);
         events = DataLoader.LoadEventData();
 
         /*// Adjust all PlayerBeat values by subtracting 1

@@ -13,6 +13,11 @@ public class UIManager : MonoBehaviour
     //[SerializeField] private Image[] maskIcons;    // QWER 四个图标
     //[SerializeField] private Transform maskHighlight; // 选中框
 
+    [Header("Battle Stats")]
+    // 直接在这里配置两个容器
+    public HealthUnit bossStats = new HealthUnit();
+    public HealthUnit playerStats = new HealthUnit();
+
     [Header("=== 面板管理  ===")]
     [SerializeField] private StartPanel startPanel;      // 拖拽 StartPanel
     [SerializeField] private GameplayPanel gameplayPanel; // 拖拽 GameplayPanel
@@ -35,6 +40,8 @@ public class UIManager : MonoBehaviour
         // 读取上次保存的音量，如果没有则默认 1.0 (最大声)
         float savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
         AudioListener.volume = savedVolume;
+
+        Init();
 
         string sceneName = SceneManager.GetActiveScene().name;
 
@@ -65,6 +72,15 @@ public class UIManager : MonoBehaviour
             // 通知邏輯層：遊戲開始了！
             // GameManager.Instance.StartLevel(); 
         }
+
+        EventCenter.Instance.AddEventListener<StageEndData>(GameEvents.OnStageEnd, onStageEnd);
+    }
+
+    
+
+    private void OnDestroy()
+    {
+        EventCenter.Instance.RemoveEventListener<StageEndData>(GameEvents.OnStageEnd, onStageEnd);
     }
 
     private void Update()
@@ -77,6 +93,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Init()
+    {
+        // 1. 绑定 UI 更新事件 (这是解耦的关键！)
+        // 当 bossStats 变化时，自动让 UIManager 去更新 Boss 血条
+
+        bossStats.OnFaceChanged += (percent) => UIManager.Instance.UpdateBossHP(percent);
+
+        // 当 playerStats 变化时，自动让 UIManager 更新 Player 血条
+        playerStats.OnFaceChanged += (percent) => UIManager.Instance.UpdatePlayerHP(percent);
+
+        // 2. 绑定死亡事件
+        bossStats.OnFaceDepleted += OnBossDefeated;
+        playerStats.OnFaceDepleted += OnPlayerDefeated;
+
+        // 3. 初始化数值 (满血)
+        bossStats.Init();
+        playerStats.Init();
+    }
     public void LoadScene(SceneName scene)
     {
         // 枚举转字符串
@@ -94,6 +128,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateBossHP(float percent)
     {
+        Debug.Log("通知对UI更新05");
         // 核心修改：UIManager 不干活，直接转包给 gameplayPanel
         if (gameplayPanel != null)
         {
@@ -278,6 +313,40 @@ public class UIManager : MonoBehaviour
 
         // 範例調用：
         // GameManager.Instance.LoadNextLevel();
+    }
+
+    public void OnBossDefeated()
+    {
+        EventCenter.Instance.EventTrigger(GameEvents.StopGame);
+        if (resultPanel != null)
+        {
+            resultPanel.Show();
+        }
+    }
+
+    public void OnPlayerDefeated()
+    {
+        EventCenter.Instance.EventTrigger(GameEvents.StopGame);
+        if (resultPanel != null)
+        {
+            resultPanel.Show();
+        }
+    }
+
+    private void onStageEnd()
+    {
+        if (resultPanel != null)
+        {
+            resultPanel.Show();
+        }
+    }
+
+    private void onStageEnd(StageEndData data)
+    {
+        if (resultPanel != null)
+        {
+            resultPanel.Show(data);
+        }
     }
     #endregion
 }

@@ -26,21 +26,25 @@ public class ResultPanel : BasePanel
         if (btnNextLevel) btnNextLevel.onClick.AddListener(OnNextLevelClicked);
         if (btnQuit) btnQuit.onClick.AddListener(OnQuitClicked);
     }
-
-    public void SetupResult(int perfects, int goods, int misses)
+    public void Show(StageEndData data)
     {
-        int total = perfects + goods + misses;
-        float ratio = total > 0 ? (float)perfects / total : 0;
+        base.Show();
+        SetupResult(data);
+    }
+    public void SetupResult(StageEndData data)
+    {
+        int total = data.GetTotalCount();
+        float ratio = data.GetPerfectRate();
 
         bool isWin = false; // 判断是否过关
 
         // 1. 根据分数设定结局文字和颜色
-        if (ratio >= 0.9f)
+        if (ratio >= 0.8f)
         {
             SetEndingUI("S级：家族传说", "你成为了别人家的小孩！", Color.yellow);
             isWin = true;
         }
-        else if (ratio >= 0.6f)
+        else if (ratio >= 0.5f)
         {
             SetEndingUI("A级：平平淡淡", "也就是个普通人，明年继续被催。", Color.white);
             isWin = true;
@@ -51,8 +55,8 @@ public class ResultPanel : BasePanel
             isWin = false; // 失败
         }
 
-        perfectCountText.text = $"完美回怼: {perfects}";
-        missCountText.text = $"尴尬沉默: {misses}";
+        perfectCountText.text = $"完美回怼: {data.PerfectCount}";
+        missCountText.text = $"完美率: {ratio}";
 
         // 2. 核心逻辑：根据胜负控制按钮显示
         if (btnNextLevel)

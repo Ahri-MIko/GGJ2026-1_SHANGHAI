@@ -64,4 +64,7 @@ public class GameEvents
 
     //停止关卡
     public const string StopGame = "StopGame";
+
+    //重新开始关卡
+    public const string ResumeGame = "Resume";
 }

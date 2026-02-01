@@ -68,5 +68,10 @@ public class Test : MonoBehaviour
         {
             UIManager.Instance.ShowEmoji("goblin", playerTransform.transform.position);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+
+        }
     }
 }

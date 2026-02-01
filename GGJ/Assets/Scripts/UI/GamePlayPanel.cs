@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using static EmojiDataStruct;
 
+
 public class GameplayPanel : BasePanel
 {
  
@@ -13,13 +14,19 @@ public class GameplayPanel : BasePanel
     [Header("Pause")]
     public Button btnPause;
 
+    [Header("Battle Stats")]
+    // 直接在这里配置两个容器
+    //public HealthUnit bossStats = new HealthUnit();
+    //public HealthUnit playerStats = new HealthUnit();
+
     [Header("Face Bars (HP)")]
     public Image bossHpFill;
     public Image bossHpRedBar;
     public Image playerFaceFill;
     public TextMeshProUGUI bossFaceText; // 显示数值，如 "面子: 80%"
+    
 
-    [Header("Mask System")]
+    
     /*
     public Image[] maskIcons; // 拖入 Q, W, E, R 的图标 Image
     public Sprite[] activeSprites; // 激活状态的图（发光）
@@ -27,7 +34,7 @@ public class GameplayPanel : BasePanel
     public Transform activeMaskIndicator; // 一个框框，指示当前选中的是谁
     */
     [SerializeField] private Image bossPortrait;
-    [SerializeField] private Transform playerPortrait;
+    [SerializeField] private Image playerPortrait;
 
     [Header("Feedback")]
     [SerializeField] private Transform feedbackSpawnPoint; // 飘字生成点
@@ -61,6 +68,8 @@ public class GameplayPanel : BasePanel
     public Color colorGood = Color.yellow;
     public Color colorMiss = Color.black;
 
+    CameraShake cameraShaker;
+
     protected override void Awake()
     {
         base.Awake();
@@ -69,8 +78,21 @@ public class GameplayPanel : BasePanel
     private void Start()
     {
         btnPause.onClick.AddListener(OnClickPause);
+        cameraShaker = Camera.main.GetComponent<CameraShake>();
+
+        EventCenter.Instance.AddEventListener<int>(GameEvents.OnDoDMG, DoDmg);
+        EventCenter.Instance.AddEventListener<int>(GameEvents.OnCure, BeDmged);
+        EventCenter.Instance.AddEventListener<string>(GameEvents.OnShowEmoji, ShowEmoji);
     }
 
+    
+
+    private void OnDestroy()
+    {
+        EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnDoDMG,DoDmg);
+        EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnCure, BeDmged);
+        EventCenter.Instance.RemoveEventListener<string>(GameEvents.OnShowEmoji, ShowEmoji);
+    }
     private void OnClickPause()
     {
         // 1. 播放按钮点击音效 (如果有 AudioManager)
@@ -85,7 +107,21 @@ public class GameplayPanel : BasePanel
         });
     }
 
+    private void DoDmg(int blood)
+    {
+        Debug.Log("通知对UI更新00");
+        Debug.Log($"收到伤害: {blood}");
+        UIManager.Instance.bossStats.Modify(-blood/1f);
+        
+        //UpdateBossHP(blood/100f);
+    }
 
+    private void BeDmged(int blood)
+    {
+        UIManager.Instance.playerStats.Modify(blood / 1f);
+        //UpdatePlayerHP(blood / 100f);
+    }
+    #region 1.血条机制
     /// <summary>
     /// 更新 Boss 面子条
     /// </summary>
@@ -94,6 +130,7 @@ public class GameplayPanel : BasePanel
     {
         // 1. 前景条立刻变（或快速变）
         //bossHpFill.DOFillAmount(percent, 0.2f);
+        Debug.Log("通知对UI更新04");
 
         // 2. 背景缓冲条延迟跟随 (传统的打击感血条)
         bossHpRedBar.DOFillAmount(percent, 0.5f).SetDelay(0.2f).SetEase(Ease.OutCirc);
@@ -104,10 +141,20 @@ public class GameplayPanel : BasePanel
 
         //4.文本改变
         float hp = percent * 100;
-         bossFaceText.text = hp.ToString();
+        bossFaceText.text = hp.ToString();
+
+        //5.镜头摇晃
+        OnCameraShake(0.2f, 0.5f);
 
 }
-
+public void OnCameraShake(float duration,float magnitude)
+    {
+        if(cameraShaker != null)
+        {
+            StartCoroutine(cameraShaker.Shake(duration, magnitude));
+        }
+        
+    }
 
 /// <summary>
 /// 更新玩家 面子条
@@ -115,7 +162,12 @@ public class GameplayPanel : BasePanel
 /// <param name="percent">0.0 到 1.0</param>
 public void UpdatePlayerHP(float percent)
     {
+        
         playerFaceFill.DOFillAmount(percent, 0.3f);
+
+        //抖动
+        playerPortrait.transform.DOShakePosition(0.3f, 10f);
+        playerPortrait.DOColor(Color.yellow, 0.1f).OnComplete(() => bossPortrait.DOColor(Color.white, 0.1f));
 
         // 如果血量危急，开始闪烁
         if (percent < 0.2f)
@@ -126,8 +178,9 @@ public void UpdatePlayerHP(float percent)
     }
 
 
+    #endregion
 
-    // --- 3. 判定反馈 (Juice) ---
+    
     #region 2. 判定反馈与飘字
 
     // 1. 公开方法：增加了 Vector3? customPos 参数
@@ -290,7 +343,19 @@ public void UpdatePlayerHP(float percent)
     #endregion
 
     #region 5.表情包系统
-    public void SpawnEmoji(string id, Vector3 spawnPos)
+
+    private void ShowEmoji(string name)
+    {
+        //PerfectReply 完美回怼
+        //NormalReply 普通表情包
+        //HurtReply 受伤表情包
+        //PerfectChaos 完美乱回
+        //PerfectEat 完美吃饭
+        //None 无
+        SpawnEmoji(name);
+    }
+
+    public void SpawnEmoji(string id, Vector3? spawnPos = null)
     {
         // 1. 查找对应的 Sprite
         Sprite targetSprite = null;
@@ -313,7 +378,7 @@ public void UpdatePlayerHP(float percent)
         GameObject obj = Instantiate(emojiPrefab, emojiContainer);
 
         // 3. 设置位置 (注意：如果 emojiContainer 有 Layout Group，这行会失效，请确保 Container 只是普通 Panel)
-        obj.transform.position = spawnPos;
+        //obj.transform.position = spawnPos;
 
         // 4. 初始化动画
         EmojiObject script = obj.GetComponent<EmojiObject>();
