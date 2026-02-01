@@ -117,7 +117,7 @@ public class BeatBar : MonoBehaviour
 
     private void Update()
     {
-        // 测试功能：按ESC键暂停/继续
+        /*// 测试功能：按ESC键暂停/继续
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
@@ -127,7 +127,7 @@ public class BeatBar : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Restart();
-        }
+        }*/
 
 
         // 检查是否还在准备阶段
@@ -762,7 +762,7 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        AudioManager.Instance.PlayBGM("Level1_Stereo");//这里需要指定歌曲
+        AudioManager.Instance.PlayBGM("Level"+LevelBlackBoard.CurrentLevelID+"_Stereo");//这里需要指定歌曲
         double currentTime = AudioSettings.dspTime;
         gameStartTime = currentTime + startOffset;
         cycleStartTime = gameStartTime;
