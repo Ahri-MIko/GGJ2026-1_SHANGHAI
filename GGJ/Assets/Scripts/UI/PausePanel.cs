@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class PausePanel : BasePanel
 {
@@ -33,11 +34,13 @@ public class PausePanel : BasePanel
         }
 
         
+        
     }
 
     // 重写 Hide，恢复时间
     public override void Hide()
     {
+        
         // 1. 缩放消失动画
         if (container != null)
         {
@@ -66,22 +69,26 @@ public class PausePanel : BasePanel
     {
         // 恢复时间 (非常重要！否则重开后游戏是暂停的)
         //Time.timeScale = 1f;
-        AudioListener.pause = false;
+        //AudioListener.pause = false;
 
         // 重新加载当前场景
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        UIManager.Instance.TogglePausePanel();
+        EventCenter.Instance.EventTrigger(GameEvents.rRestart);
+
     }
 
     private void OnQuitClicked()
     {
         // 恢复时间
         //Time.timeScale = 1f;
-        AudioListener.pause = false;
+        //AudioListener.pause = false;
 
         // 通知 UIManager 切换回标题画面
         // 注意：这里需要先关闭暂停界面，再切界面
         UIManager.Instance.OnBackToTitle();
+        //EventCenter.Instance.EventTrigger(GameEvents.rRestart);
 
-        
+
     }
 }

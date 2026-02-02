@@ -58,6 +58,10 @@ public class GameEvents
     /// </summary>
     public const string PlayRandomVoice = "PlayRandomVoice";
 
+    /// <summary>
+    /// 玩家的旗袍
+    /// 参数：string - 需要漂浮的弹幕设置
+    /// </summary>
     //Player的气泡
     public const string PlayerMSG = "PlayerMSG";
 
@@ -67,4 +71,8 @@ public class GameEvents
 
     //重新开始关卡
     public const string ResumeGame = "Resume";
+
+    public const string Pause = "Pause";
+
+    public const string rRestart = "rRestart";
 }

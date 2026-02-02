@@ -83,6 +83,8 @@ public class GameplayPanel : BasePanel
         EventCenter.Instance.AddEventListener<int>(GameEvents.OnDoDMG, DoDmg);
         EventCenter.Instance.AddEventListener<int>(GameEvents.OnCure, BeDmged);
         EventCenter.Instance.AddEventListener<string>(GameEvents.OnShowEmoji, ShowEmoji);
+        //EventCenter.Instance.AddEventListener<string>(GameEvents.OnBossAction, onBossDanmaku);
+        //EventCenter.Instance.AddEventListener<string>(GameEvents.PlayerMSG, onPlayerDanmaku);
     }
 
     
@@ -92,6 +94,8 @@ public class GameplayPanel : BasePanel
         EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnDoDMG,DoDmg);
         EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnCure, BeDmged);
         EventCenter.Instance.RemoveEventListener<string>(GameEvents.OnShowEmoji, ShowEmoji);
+        //EventCenter.Instance.RemoveEventListener<string>(GameEvents.OnBossAction, onBossDanmaku);
+        //EventCenter.Instance.RemoveEventListener<string>(GameEvents.PlayerMSG, onPlayerDanmaku);
     }
     private void OnClickPause()
     {
@@ -305,6 +309,11 @@ public void UpdatePlayerHP(float percent)
     /// <summary>
     /// Boss 发射弹幕攻击
     /// </summary>
+    
+    public void onBossDanmaku(string text)
+    {
+        SpawnBossDanmaku(text);
+    }
     public void SpawnBossDanmaku(string text)
     {
         // 1. 随机高度
@@ -317,6 +326,10 @@ public void UpdatePlayerHP(float percent)
         CreateDanmaku(text, Color.white, duration, randomY);
     }
 
+    public void onPlayerDanmaku(string text)
+    {
+        SpawnPlayerDanmaku(text);
+    }
     /// <summary>
     /// 玩家回怼弹幕 (通常更快、更显眼)
     /// </summary>

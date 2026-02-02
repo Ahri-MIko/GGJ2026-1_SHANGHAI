@@ -19,6 +19,8 @@ public class ResultPanel : BasePanel
     public TextMeshProUGUI perfectCountText;
     public TextMeshProUGUI missCountText;
 
+    public GameObject SucceedImage;
+    public GameObject LoseImage;
     private void Start()
     {
         // 绑定事件
@@ -26,10 +28,30 @@ public class ResultPanel : BasePanel
         if (btnNextLevel) btnNextLevel.onClick.AddListener(OnNextLevelClicked);
         if (btnQuit) btnQuit.onClick.AddListener(OnQuitClicked);
     }
-    public void Show(StageEndData data)
+    public  void Show(StageEndData data)
     {
         base.Show();
-        SetupResult(data);
+        
+        
+    }
+
+    public void Show(bool isWin)
+    {
+        base.Show();
+        SetupResult(isWin);
+    }
+    public void SetupResult(bool isWin)
+    {
+        if (isWin)
+        {
+            LoseImage.SetActive(false);
+            SucceedImage.SetActive(true);
+        }
+        else
+        {
+            SucceedImage.SetActive(false);
+            LoseImage.SetActive(true);
+        }
     }
     public void SetupResult(StageEndData data)
     {
@@ -41,23 +63,33 @@ public class ResultPanel : BasePanel
         // 1. 根据分数设定结局文字和颜色
         if (ratio >= 0.8f)
         {
-            SetEndingUI("S级：家族传说", "你成为了别人家的小孩！", Color.yellow);
+            //SetEndingUI("S级：家族传说", "你成为了别人家的小孩！", Color.yellow);
             isWin = true;
         }
         else if (ratio >= 0.5f)
         {
-            SetEndingUI("A级：平平淡淡", "也就是个普通人，明年继续被催。", Color.white);
+            //SetEndingUI("A级：平平淡淡", "也就是个普通人，明年继续被催。", Color.white);
             isWin = true;
         }
         else
         {
-            SetEndingUI("C级：家族之耻", "聚餐只能坐小孩那桌。", Color.gray);
+            //SetEndingUI("C级：家族之耻", "聚餐只能坐小孩那桌。", Color.gray);
             isWin = false; // 失败
         }
 
-        perfectCountText.text = $"完美回怼: {data.PerfectCount}";
-        missCountText.text = $"完美率: {ratio}";
-
+        //perfectCountText.text = $"完美回怼: {data.PerfectCount}";
+        //missCountText.text = $"完美率: {ratio}";
+        if(isWin)
+        {
+            LoseImage.SetActive(false);
+            SucceedImage.SetActive(true);
+        }
+        else
+        {
+            SucceedImage.SetActive(false);
+            LoseImage.SetActive(true);
+        }
+        /*
         // 2. 核心逻辑：根据胜负控制按钮显示
         if (btnNextLevel)
         {
@@ -75,6 +107,7 @@ public class ResultPanel : BasePanel
                 btnNextLevel.gameObject.SetActive(false);
             }
         }
+        */
     }
 
     void SetEndingUI(string title, string desc, Color color)

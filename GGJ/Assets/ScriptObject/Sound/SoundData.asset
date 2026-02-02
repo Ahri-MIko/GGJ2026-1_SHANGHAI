@@ -144,7 +144,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2eff85bc971d9714b9a4dca28580574f, type: 3}
     volume: 1
   - soundName: Press
-    clip: {fileID: 8300000, guid: c27cbf1ba5f252c4db9e2853238ec163, type: 3}
+    clip: {fileID: 8300000, guid: ccbcbdf3b7f014c4c8d7aeee61149102, type: 3}
     volume: 1
   - soundName: sfx_q
     clip: {fileID: 8300000, guid: e34bee92f66eb94439060df6d89b2280, type: 3}

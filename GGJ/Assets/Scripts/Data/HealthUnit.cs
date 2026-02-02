@@ -6,7 +6,7 @@ using UnityEngine.EventSystems; // 用于 Action 事件
 public class HealthUnit
 {
     [Header("Settings")]
-    public float maxFace = 150f; // 最大面子值
+    public float maxFace = 600f; // 最大面子值
 
     [Header("Runtime (Read Only)")]
     [SerializeField] private BindableProperty<float> currentFace; // 当前面子值

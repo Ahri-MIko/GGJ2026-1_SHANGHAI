@@ -12,6 +12,8 @@ public class StartPanel : BasePanel
     public Button settingsButton;
     public Transform titleImage; // 标题图片，用来做动效
 
+    [SerializeField] private Button btnTutorial;
+
     private void Start()
     {
         // 绑定按钮事件
@@ -26,6 +28,7 @@ public class StartPanel : BasePanel
         {
             titleImage.DOScale(1.05f, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
         }
+        btnTutorial.onClick.AddListener(OnOpenTutorial);
     }
 
     
@@ -42,6 +45,7 @@ public class StartPanel : BasePanel
             // 注意：这里我们只负责通知 UI 变化，具体的“开始游戏逻辑”交给 Manager 协调
             UIManager.Instance.OnStartLevel01();
         });
+        EventCenter.Instance.EventTrigger(GameEvents.rRestart);
     }
 
     private void OnStartClicked_02()
@@ -56,8 +60,13 @@ public class StartPanel : BasePanel
             // 注意：这里我们只负责通知 UI 变化，具体的“开始游戏逻辑”交给 Manager 协调
             UIManager.Instance.OnStartLevel02();
         });
+        EventCenter.Instance.EventTrigger(GameEvents.rRestart);
     }
-
+    private void OnOpenTutorial()
+    {
+        UIManager.Instance.CloseSettingsPanel();
+        UIManager.Instance.ShowTutorialPanel();
+    }
     private void OnQuitClicked()
     {
         // 退出游戏

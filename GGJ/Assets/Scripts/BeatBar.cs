@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class BeatBar : MonoBehaviour
 {
+    [SerializeField] private int LevelID = 1;
     [Header("引用")]
     [Tooltip("左边界（Left空物体）")]
     [SerializeField] private RectTransform left;
@@ -97,11 +98,14 @@ public class BeatBar : MonoBehaviour
     private void Start()
     {
         Initialize();
-        
+
         // 注册事件
         EventCenter.Instance.AddEventListener(GameEvents.StopGame, OnStopGame);
         EventCenter.Instance.AddEventListener(GameEvents.ResumeGame, OnResumeGame);
-        
+        EventCenter.Instance.AddEventListener(GameEvents.Pause, TogglePause);
+        EventCenter.Instance.AddEventListener(GameEvents.rRestart, RealRestart);
+
+
         if (autoStart)
         {
             StartGame();
@@ -113,11 +117,14 @@ public class BeatBar : MonoBehaviour
         // 注销事件
         EventCenter.Instance.RemoveEventListener(GameEvents.StopGame, OnStopGame);
         EventCenter.Instance.RemoveEventListener(GameEvents.ResumeGame, OnResumeGame);
-    }
+        EventCenter.Instance.RemoveEventListener(GameEvents.Pause, TogglePause);
+        EventCenter.Instance.RemoveEventListener(GameEvents.rRestart, RealRestart);
 
+
+    }
     private void Update()
     {
-        // 测试功能：按ESC键暂停/继续
+        /*// 测试功能：按ESC键暂停/继续
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
@@ -127,7 +134,7 @@ public class BeatBar : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Restart();
-        }
+        }*/
 
 
         // 检查是否还在准备阶段
@@ -743,7 +750,30 @@ public class BeatBar : MonoBehaviour
         {
             Debug.LogWarning("eviation UI组件为null，无法更新偏差显示！");
         }
-        
+
+
+
+
+        // 根据判定等级和按键改变表情（只在成功判定时）
+        if (result.Level == JudgementLevel.Perfect || result.Level == JudgementLevel.Great)
+        {
+            if (FaceManager.Instance != null && !string.IsNullOrEmpty(result.InputKey))
+            {
+                if (result.InputKey == "Q")
+                {
+                    FaceManager.Instance.ChangeFace(0);
+                }
+                else if (result.InputKey == "W")
+                {
+                    FaceManager.Instance.ChangeFace(1);
+                }
+                else if (result.InputKey == "E")
+                {
+                    FaceManager.Instance.ChangeFace(2);
+                }
+            }
+        }
+
         Debug.Log($"触发判定事件: BeatIndex={result.BeatIndex}, Level={result.Level}, Key={result.InputKey}");
         
         // 触发判定事件
@@ -762,7 +792,7 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        AudioManager.Instance.PlayBGM("Level1_Stereo");//这里需要指定歌曲
+        AudioManager.Instance.PlayBGM("Level" + levelBlackBoard.CurrentLevelID +"_Stereo") ;//这里需要指定歌曲
         double currentTime = AudioSettings.dspTime;
         gameStartTime = currentTime + startOffset;
         cycleStartTime = gameStartTime;
@@ -875,7 +905,7 @@ public class BeatBar : MonoBehaviour
         ResetPosition();
 
         
-        EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd,new StageEndData(perfectCount,greatCount,missCount));
+        //EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd,new StageEndData(perfectCount,greatCount,missCount));
     }
 
     /// <summary>
@@ -908,6 +938,48 @@ public class BeatBar : MonoBehaviour
         
         Debug.Log("游戏重新开始");
         
+        // 重新开始游戏（包含offset）
+        StartGame();
+    }
+
+    public void RealRestart()
+    {
+        
+        isPlaying = false;
+        isInPreparation = false;
+        pausedDuration = 0;
+
+        // 停止BGM（如果AudioManager存在）
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+
+        // 重置位置
+        ResetPosition();
+
+        // 重置回合数
+        roundIndex = 1;
+        if (roundController != null)
+        {
+            roundController.SetRound(roundIndex);
+        }
+
+        // 重置所有节拍状态
+        ResetBeatTriggers();
+
+        // 重置统计数据
+        ResetStatistics();
+
+        // 初始化偏差显示为等待状态
+        if (eviation != null)
+        {
+            eviation.text = "Ready...";
+            eviation.color = Color.white;
+        }
+
+        Debug.Log("游戏重新开始");
+
         // 重新开始游戏（包含offset）
         StartGame();
     }
