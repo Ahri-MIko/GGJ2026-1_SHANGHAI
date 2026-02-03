@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class SettingsPanel : BasePanel
 {
     [Header("UI Components")]
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private Button btnSaveAndExit;
+    
 
     private const string PREF_VOLUME = "MasterVolume"; // 保存用的 Key
 
@@ -15,7 +17,11 @@ public class SettingsPanel : BasePanel
         // 绑定事件
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         btnSaveAndExit.onClick.AddListener(OnSaveAndExitClicked);
+        
+        
     }
+
+   
 
     // 重写 Show 方法：每次打开面板时，都要读取当前音量
     public override void Show()

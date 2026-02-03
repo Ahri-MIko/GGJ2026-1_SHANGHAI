@@ -10,5 +10,6 @@ public enum SceneName
     Title,
     Level01,
     Level02,
-    Level03
+    Level03,
+    SampleScene
 }

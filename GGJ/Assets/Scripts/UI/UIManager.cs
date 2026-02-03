@@ -26,6 +26,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SettingsPanel settingsPanel;
     [SerializeField] private TutorialPanel tutorialPanel;
 
+    // 判定统计
+    private int perfectCount = 0;
+    private int greatCount = 0;
+    private int goodCount = 0;
+    private int missCount = 0;
 
 
     void Awake()
@@ -63,7 +68,7 @@ public class UIManager : MonoBehaviour
             }
         }
      
-        else if (sceneName == "UITest02")
+        else if (sceneName == "SampleScene")
         {
             // 在遊戲場景，隱藏開始介面，顯示戰鬥介面
             if (startPanel) startPanel.Hide();
@@ -90,6 +95,11 @@ public class UIManager : MonoBehaviour
         {
             PlayerPrefs.DeleteKey("HasSeenTutorial");
             Debug.Log("教学记录已重置！下次启动会再次显示。");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePausePanel();
         }
     }
 
@@ -166,6 +176,10 @@ public class UIManager : MonoBehaviour
 
     #region 3. 对话与剧情
 
+    public void onBossDialogue(string content)
+    {
+        ShowBossDialogue(content);
+    }
     // Boss 说话
     public void ShowBossDialogue(string content)
     {
@@ -176,6 +190,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void onPlayerDialogue(string content)
+    {
+        ShowPlayerRetort(content);
+    }
     // 玩家回怼
     public void ShowPlayerRetort(string content)
     {
@@ -228,7 +246,8 @@ public class UIManager : MonoBehaviour
         //if (gameplayPanel) gameplayPanel.Show();
         // 2. 逻辑层面：通知另一位程序同学的 GameManager
         // GameManager.Instance.StartGameLogic(); 
-        LoadScene(SceneName.UITest02);
+        LoadScene(SceneName.SampleScene);
+        
         Debug.Log("UI状态已切换：进入战斗");
     }
 
@@ -239,7 +258,11 @@ public class UIManager : MonoBehaviour
         //if (gameplayPanel) gameplayPanel.Show();
         // 2. 逻辑层面：通知另一位程序同学的 GameManager
         // GameManager.Instance.StartGameLogic(); 
-        LoadScene(SceneName.UITest03);
+        //SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
+
+
+        LoadScene(SceneName.Level02);
+        
         Debug.Log("UI状态已切换：进入战斗");
     }
 
@@ -252,10 +275,12 @@ public class UIManager : MonoBehaviour
         if (pausePanel.gameObject.activeSelf)
         {
             pausePanel.Hide();
+            EventCenter.Instance.EventTrigger(GameEvents.Pause);
         }
         else
         {
             pausePanel.Show();
+            EventCenter.Instance.EventTrigger(GameEvents.Pause);
         }
     }
 
@@ -317,20 +342,23 @@ public class UIManager : MonoBehaviour
 
     public void OnBossDefeated()
     {
-        EventCenter.Instance.EventTrigger(GameEvents.StopGame);
+       
         if (resultPanel != null)
         {
-            resultPanel.Show();
+            resultPanel.Show(true);
         }
+        EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd, new StageEndData(perfectCount, greatCount, missCount));
+
     }
 
     public void OnPlayerDefeated()
     {
-        EventCenter.Instance.EventTrigger(GameEvents.StopGame);
+       
         if (resultPanel != null)
         {
-            resultPanel.Show();
+            resultPanel.Show(false);
         }
+        EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd, new StageEndData(perfectCount, greatCount, missCount));
     }
 
     private void onStageEnd()
@@ -343,10 +371,11 @@ public class UIManager : MonoBehaviour
 
     private void onStageEnd(StageEndData data)
     {
-        if (resultPanel != null)
-        {
-            resultPanel.Show(data);
-        }
+        //if (resultPanel != null)
+        //{
+        //    resultPanel.Show(data);
+        //}
+        EventCenter.Instance.EventTrigger(GameEvents.StopGame);
     }
     #endregion
 }

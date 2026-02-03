@@ -8,11 +8,11 @@ public class PotManager : MonoBehaviour
     [Header("节拍点锅图片（共7个）")]
     [Tooltip("手动拖入7个锅图片，对应节拍1-7")]
     [SerializeField] private GameObject[] pots = new GameObject[7];
-    
+
     [Header("箭头设置")]
     [SerializeField] private GameObject Arrow;
     [SerializeField] private int ArrowDistance = 70;
-    
+
     [Header("默认箭头位置")]
     [Tooltip("非1-7拍时箭头的默认位置")]
     [SerializeField] private Transform defaultArrowPosition;
@@ -23,7 +23,7 @@ public class PotManager : MonoBehaviour
 
     private void Awake()
     {
-        if(!inverse)
+        if (!inverse)
         {
             Arrow.SetActive(false);
         }
@@ -31,14 +31,14 @@ public class PotManager : MonoBehaviour
         {
             Arrow.SetActive(true);
         }
-        
+
     }
 
     public void ShowPot(int index)
     {
         if (index >= 1 && index <= 7)
         {
-            
+
             if (!inverse)
             {
                 pots[index - 1].SetActive(true);
@@ -49,7 +49,6 @@ public class PotManager : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// 隐藏指定编号的锅（编号从1开始）
     /// </summary>
@@ -57,7 +56,7 @@ public class PotManager : MonoBehaviour
     {
         if (index >= 1 && index <= 7)
         {
-           
+
             if (!inverse)
             {
                 pots[index - 1].SetActive(false);
@@ -78,7 +77,7 @@ public class PotManager : MonoBehaviour
         {
             // 激活箭头
             Arrow.SetActive(true);
-            
+
             // 获取目标锅盖的位置
             GameObject targetPot = pots[index - 1];
             if (targetPot != null)
@@ -100,7 +99,7 @@ public class PotManager : MonoBehaviour
         {
             // 激活箭头
             Arrow.SetActive(true);
-            
+
             // 设置箭头到默认位置
             if (defaultArrowPosition != null)
             {

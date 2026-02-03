@@ -33,7 +33,6 @@ public class SingletonMono<T> : MonoBehaviour where T : SingletonMono<T>
         if (_instance == null)
         {
             _instance = (T)this;//Singleton<T> -> T
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

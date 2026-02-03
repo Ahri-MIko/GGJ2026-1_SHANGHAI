@@ -4,7 +4,7 @@ using UnityEngine;
 public class LevelBlackBoard : MonoBehaviour
 {
 
-    public static  int CurrentLevelID = 1;
+    public int CurrentLevelID = 1;
 
 
     public List<StageData> stages = new List<StageData>();

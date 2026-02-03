@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class AudioManager : SingletonMono<AudioManager>
 {
+    public static AudioManager instance;
     [Header("音频数据")]
     [Tooltip("音频数据ScriptableObject")]
     [SerializeField] private SoundData soundData;
@@ -37,6 +38,7 @@ public class AudioManager : SingletonMono<AudioManager>
     protected override void Awake()
     {
         base.Awake();
+        
         InitializeAudioSources();
         BuildDictionaries();
     }
