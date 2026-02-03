@@ -325,9 +325,16 @@ public class BeatBar : MonoBehaviour
         // 检查是否完成循环
         if (elapsedTime >= cycleDuration)
         {
-            // 开始新的循环
-            cycleStartTime = currentTime;
-            elapsedTime = 0;
+            double overtime = elapsedTime - cycleDuration;
+            Debug.Log($"本轮相差时间: {overtime:F6}秒 ({overtime * 1000:F3}ms)");
+
+            // 开始新的循环 - 使用累加方式避免误差累积
+            // 关键：基于理论时间而不是当前时间，这样超出的时间会自动补偿到下一轮
+            cycleStartTime += cycleDuration;
+            
+            // 重新计算 elapsedTime（会自动包含超出的时间）
+            elapsedTime = currentTime - cycleStartTime;
+            
             ResetBeatTriggers(); // 重置节拍触发标记
             OnCycleComplete();
         }
