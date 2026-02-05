@@ -311,10 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: badbf080a01aca1498d19281be47f8e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossStats:
-    maxFace: 100
-  playerStats:
-    maxFace: 100
   startPanel: {fileID: 6447895311398011474}
   gameplayPanel: {fileID: 2053682104524556957}
   resultPanel: {fileID: 1571685155811256098}
@@ -2224,7 +2220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1219162684462422951
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2274,7 +2270,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c39cc6d0f95db03408025c1adcaf6042, type: 2}
   m_sharedMaterial: {fileID: 1205609176945934721, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2338,7 +2334,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3826362209849961863
@@ -3105,7 +3101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4925564459414781771
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3155,7 +3151,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Title
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c39cc6d0f95db03408025c1adcaf6042, type: 2}
   m_sharedMaterial: {fileID: 1205609176945934721, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3219,7 +3215,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4846615399271358969
@@ -4413,7 +4409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5401076666951033543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4463,7 +4459,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c39cc6d0f95db03408025c1adcaf6042, type: 2}
   m_sharedMaterial: {fileID: 1205609176945934721, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4527,7 +4523,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6469734114599098133
@@ -5501,7 +5497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1023915587210268205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6170,7 +6166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8608297407290048290
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6620,7 +6616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7920623564568749092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6670,7 +6666,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: decs
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c39cc6d0f95db03408025c1adcaf6042, type: 2}
   m_sharedMaterial: {fileID: 1205609176945934721, guid: d1d5b4ca5ba83354dafe3e5da261a166, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6734,7 +6730,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &9060182203423888803

@@ -247,112 +247,112 @@
     {
         "EventId": "2001",
         "Note": "1 - 半扇人",
-        "ShowMessage": "以后别后悔!",
+        "ShowMessage": "不然半扇人回来？",
         "EventType": 20,
         "SoundFile": "2001.0"
     },
     {
         "EventId": "2002",
         "Note": "2 - 等我找到我的另半扇呗",
-        "ShowMessage": "不然半扇人回来？",
+        "ShowMessage": "等我找到我的另半扇",
         "EventType": 20,
         "SoundFile": "2002.0"
     },
     {
         "EventId": "2003",
         "Note": "3 - 你缺个马不也挺好的？",
-        "ShowMessage": "等我找到我的另半扇",
+        "ShowMessage": "你缺个马也挺好的",
         "EventType": 20,
         "SoundFile": "2003.0"
     },
     {
         "EventId": "2004",
         "Note": "4 - 全靠您衬托",
-        "ShowMessage": "你缺个马也挺好的",
+        "ShowMessage": "全靠大姨衬托",
         "EventType": 20,
         "SoundFile": "2004.0"
     },
     {
         "EventId": "2005",
         "Note": "5 - 喜欢有家的",
-        "ShowMessage": "全靠大姨衬托",
+        "ShowMessage": "喜欢有家的",
         "EventType": 20,
         "SoundFile": "2005.0"
     },
     {
         "EventId": "2006",
         "Note": "6 - 猪圈里那个谁也和你挺配的",
-        "ShowMessage": "有家的",
+        "ShowMessage": "猪圈里那个谁也和你挺配",
         "EventType": 20,
         "SoundFile": "2006.0"
     },
     {
         "EventId": "2007",
         "Note": "7 - 那你还配和我说话？",
-        "ShowMessage": "猪场里那个谁也和你挺配",
+        "ShowMessage": "那你还配和我说话？",
         "EventType": 20,
         "SoundFile": "2007.0"
     },
     {
         "EventId": "2008",
         "Note": "8 - 所以她上不了大学呀",
-        "ShowMessage": "那你还配和我说话？",
+        "ShowMessage": "所以她没上大学",
         "EventType": 20,
         "SoundFile": "2008.0"
     },
     {
         "EventId": "2009",
         "Note": "9 - 等我的另一半离婚吧",
-        "ShowMessage": "所以她没上大学",
+        "ShowMessage": "等我的另半扇离婚",
         "EventType": 20,
         "SoundFile": "2009.0"
     },
     {
         "EventId": "2010",
         "Note": "10 - 回家等通知呗",
-        "ShowMessage": "等我的另半扇离婚",
+        "ShowMessage": "等组织通知",
         "EventType": 20,
         "SoundFile": "2010.0"
     },
     {
         "EventId": "2011",
         "Note": "11 - 我不也没人要吗？",
-        "ShowMessage": "等组织通知",
+        "ShowMessage": "我不也没人要？",
         "EventType": 20,
         "SoundFile": "2011.0"
     },
     {
         "EventId": "2012",
         "Note": "12 - 那你咋还不开席啊？",
-        "ShowMessage": "我不也没人要？",
+        "ShowMessage": "那你咋还不开席？",
         "EventType": 20,
         "SoundFile": "2012.0"
     },
     {
         "EventId": "2013",
         "Note": "13 - 你儿子也没养你啊",
-        "ShowMessage": "那你咋还不开席？",
+        "ShowMessage": "你儿子也没养你啊？",
         "EventType": 20,
         "SoundFile": "2013.0"
     },
     {
         "EventId": "2014",
         "Note": "14 - 哇，还有三星通关！",
-        "ShowMessage": "你儿子也没养你啊？",
+        "ShowMessage": "还有三星通关？",
         "EventType": 20,
         "SoundFile": "2014.0"
     },
     {
         "EventId": "2015",
         "Note": "15 - 像你一样到处问",
-        "ShowMessage": "还有三星通关？",
+        "ShowMessage": "像你一样到处问",
         "EventType": 20,
         "SoundFile": "2015.0"
     },
     {
         "EventId": "2016",
         "Note": "1 - 怕你们太闲了",
-        "ShowMessage": "像你一样到处问",
+        "ShowMessage": "怕你们太闲了",
         "EventType": 20,
         "SoundFile": "2016.0"
     },

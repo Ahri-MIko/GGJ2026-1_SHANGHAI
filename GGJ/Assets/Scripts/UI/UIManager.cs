@@ -13,10 +13,6 @@ public class UIManager : MonoBehaviour
     //[SerializeField] private Image[] maskIcons;    // QWER 四个图标
     //[SerializeField] private Transform maskHighlight; // 选中框
 
-    [Header("Battle Stats")]
-    // 直接在这里配置两个容器
-    public HealthUnit bossStats = new HealthUnit();
-    public HealthUnit playerStats = new HealthUnit();
 
     [Header("=== 面板管理  ===")]
     [SerializeField] private StartPanel startPanel;      // 拖拽 StartPanel
@@ -26,11 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SettingsPanel settingsPanel;
     [SerializeField] private TutorialPanel tutorialPanel;
 
-    // 判定统计
-    private int perfectCount = 0;
-    private int greatCount = 0;
-    private int goodCount = 0;
-    private int missCount = 0;
+
 
 
     void Awake()
@@ -46,7 +38,7 @@ public class UIManager : MonoBehaviour
         float savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
         AudioListener.volume = savedVolume;
 
-        Init();
+        //Init();
 
         string sceneName = SceneManager.GetActiveScene().name;
 
@@ -69,6 +61,16 @@ public class UIManager : MonoBehaviour
         }
      
         else if (sceneName == "SampleScene")
+        {
+            // 在遊戲場景，隱藏開始介面，顯示戰鬥介面
+            if (startPanel) startPanel.Hide();
+            if (gameplayPanel) gameplayPanel.Show();
+
+            // 通知邏輯層：遊戲開始了！
+            // GameManager.Instance.StartLevel(); 
+        }
+
+        else if (sceneName == "Level02")
         {
             // 在遊戲場景，隱藏開始介面，顯示戰鬥介面
             if (startPanel) startPanel.Hide();
@@ -103,6 +105,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /*
     private void Init()
     {
         // 1. 绑定 UI 更新事件 (这是解耦的关键！)
@@ -121,6 +124,7 @@ public class UIManager : MonoBehaviour
         bossStats.Init();
         playerStats.Init();
     }
+    */
     public void LoadScene(SceneName scene)
     {
         // 枚举转字符串
@@ -138,7 +142,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateBossHP(float percent)
     {
-        Debug.Log("通知对UI更新05");
+        //Debug.Log("通知对UI更新05");
         // 核心修改：UIManager 不干活，直接转包给 gameplayPanel
         if (gameplayPanel != null)
         {
@@ -340,42 +344,16 @@ public class UIManager : MonoBehaviour
         // GameManager.Instance.LoadNextLevel();
     }
 
-    public void OnBossDefeated()
-    {
-       
-        if (resultPanel != null)
-        {
-            resultPanel.Show(true);
-        }
-        EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd, new StageEndData(perfectCount, greatCount, missCount));
+    
 
-    }
-
-    public void OnPlayerDefeated()
-    {
-       
-        if (resultPanel != null)
-        {
-            resultPanel.Show(false);
-        }
-        EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd, new StageEndData(perfectCount, greatCount, missCount));
-    }
-
-    private void onStageEnd()
-    {
-        if (resultPanel != null)
-        {
-            resultPanel.Show();
-        }
-    }
-
+    //监听OnStageEnd事件
     private void onStageEnd(StageEndData data)
     {
-        //if (resultPanel != null)
-        //{
-        //    resultPanel.Show(data);
-        //}
-        EventCenter.Instance.EventTrigger(GameEvents.StopGame);
+        if (resultPanel != null)
+        {
+            resultPanel.Show(data);
+        }
+        //EventCenter.Instance.EventTrigger(GameEvents.StopGame);
     }
     #endregion
 }

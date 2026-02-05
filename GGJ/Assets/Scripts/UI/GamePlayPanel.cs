@@ -80,22 +80,22 @@ public class GameplayPanel : BasePanel
         btnPause.onClick.AddListener(OnClickPause);
         cameraShaker = Camera.main.GetComponent<CameraShake>();
 
-        EventCenter.Instance.AddEventListener<int>(GameEvents.OnDoDMG, DoDmg);
-        EventCenter.Instance.AddEventListener<int>(GameEvents.OnCure, BeDmged);
+        //EventCenter.Instance.AddEventListener<int>(GameEvents.OnDoDMG, DoDmg);
+        //EventCenter.Instance.AddEventListener<int>(GameEvents.OnCure, BeDmged);
         EventCenter.Instance.AddEventListener<string>(GameEvents.OnShowEmoji, ShowEmoji);
-        //EventCenter.Instance.AddEventListener<string>(GameEvents.OnBossAction, onBossDanmaku);
-        //EventCenter.Instance.AddEventListener<string>(GameEvents.PlayerMSG, onPlayerDanmaku);
+        EventCenter.Instance.AddEventListener<string>(GameEvents.OnBossAction, onBossDanmaku);
+        EventCenter.Instance.AddEventListener<string>(GameEvents.PlayerMSG, onPlayerDanmaku);
     }
 
     
 
     private void OnDestroy()
     {
-        EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnDoDMG,DoDmg);
-        EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnCure, BeDmged);
+        //EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnDoDMG,DoDmg);
+        //EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnCure, BeDmged);
         EventCenter.Instance.RemoveEventListener<string>(GameEvents.OnShowEmoji, ShowEmoji);
-        //EventCenter.Instance.RemoveEventListener<string>(GameEvents.OnBossAction, onBossDanmaku);
-        //EventCenter.Instance.RemoveEventListener<string>(GameEvents.PlayerMSG, onPlayerDanmaku);
+        EventCenter.Instance.RemoveEventListener<string>(GameEvents.OnBossAction, onBossDanmaku);
+        EventCenter.Instance.RemoveEventListener<string>(GameEvents.PlayerMSG, onPlayerDanmaku);
     }
     private void OnClickPause()
     {
@@ -115,15 +115,16 @@ public class GameplayPanel : BasePanel
     {
         Debug.Log("通知对UI更新00");
         Debug.Log($"收到伤害: {blood}");
-        UIManager.Instance.bossStats.Modify(-blood/1f);
-        
+        //UIManager.Instance.bossStats.Modify(-blood/1f);
         //UpdateBossHP(blood/100f);
+        EventCenter.Instance.EventTrigger<int>(GameEvents.OnDoDMG,blood);
     }
 
     private void BeDmged(int blood)
     {
-        UIManager.Instance.playerStats.Modify(blood / 1f);
+        //UIManager.Instance.playerStats.Modify(blood / 1f);
         //UpdatePlayerHP(blood / 100f);
+        EventCenter.Instance.EventTrigger<int>(GameEvents.OnCure, blood);
     }
     #region 1.血条机制
     /// <summary>
@@ -134,7 +135,7 @@ public class GameplayPanel : BasePanel
     {
         // 1. 前景条立刻变（或快速变）
         //bossHpFill.DOFillAmount(percent, 0.2f);
-        Debug.Log("通知对UI更新04");
+        //Debug.Log("通知对UI更新04");
 
         // 2. 背景缓冲条延迟跟随 (传统的打击感血条)
         bossHpRedBar.DOFillAmount(percent, 0.5f).SetDelay(0.2f).SetEase(Ease.OutCirc);

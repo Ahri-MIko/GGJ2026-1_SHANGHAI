@@ -1816,6 +1816,10 @@ MonoBehaviour:
   roundController: {fileID: 1030539808}
   validKeys: 710000007700000065000000
   levelBlackBoard: {fileID: 959391256}
+  bossStats:
+    maxFace: 100
+  playerStats:
+    maxFace: 100
 --- !u!1 &1541919196
 GameObject:
   m_ObjectHideFlags: 0

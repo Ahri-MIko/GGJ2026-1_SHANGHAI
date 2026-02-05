@@ -93,8 +93,12 @@ public class BeatBar : MonoBehaviour
     private int greatCount = 0;
     private int goodCount = 0;
     private int missCount = 0;
+    private bool isWin = false;
 
-
+    [Header("Battle Stats")]
+    // 直接在这里配置两个容器
+    public HealthUnit bossStats = new HealthUnit();
+    public HealthUnit playerStats = new HealthUnit();
     private void Start()
     {
         Initialize();
@@ -104,6 +108,8 @@ public class BeatBar : MonoBehaviour
         EventCenter.Instance.AddEventListener(GameEvents.ResumeGame, OnResumeGame);
         EventCenter.Instance.AddEventListener(GameEvents.Pause, TogglePause);
         EventCenter.Instance.AddEventListener(GameEvents.rRestart, RealRestart);
+        EventCenter.Instance.AddEventListener<int>(GameEvents.OnDoDMG, DoDmg);
+        EventCenter.Instance.AddEventListener<int>(GameEvents.OnCure, BeDmg);
 
 
         if (autoStart)
@@ -119,6 +125,8 @@ public class BeatBar : MonoBehaviour
         EventCenter.Instance.RemoveEventListener(GameEvents.ResumeGame, OnResumeGame);
         EventCenter.Instance.RemoveEventListener(GameEvents.Pause, TogglePause);
         EventCenter.Instance.RemoveEventListener(GameEvents.rRestart, RealRestart);
+        EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnDoDMG, DoDmg);
+        EventCenter.Instance.RemoveEventListener<int>(GameEvents.OnCure, BeDmg);
 
 
     }
@@ -288,7 +296,22 @@ public class BeatBar : MonoBehaviour
         //重置锅盖
         UpdatePotDisplay();
 
+            // 1. 绑定 UI 更新事件 (这是解耦的关键！)
+            // 当 bossStats 变化时，自动让 UIManager 去更新 Boss 血条
 
+            bossStats.OnFaceChanged += (percent) => UIManager.Instance.UpdateBossHP(percent);
+
+            // 当 playerStats 变化时，自动让 UIManager 更新 Player 血条
+            playerStats.OnFaceChanged += (percent) => UIManager.Instance.UpdatePlayerHP(percent);
+
+            // 2. 绑定死亡事件
+            bossStats.OnFaceDepleted += OnBossDefeated;
+            playerStats.OnFaceDepleted += OnPlayerDefeated;
+
+            // 3. 初始化数值 (满血)
+            bossStats.Init();
+            playerStats.Init();
+        
     }
 
     /// <summary>
@@ -793,7 +816,36 @@ public class BeatBar : MonoBehaviour
     #endregion
 
     #region 公共方法
+    //监听boss被击败事件
+    public void OnBossDefeated()
+    {
 
+        isWin = true;
+        //EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd, new StageEndData(perfectCount, greatCount, missCount, isWin));
+        //EventCenter.Instance.EventTrigger(GameEvents.StopGame);
+        Stop();
+
+
+    }
+    //监听玩家被击败事件
+    public void OnPlayerDefeated()
+    {
+
+        isWin = false;
+        //EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd, new StageEndData(perfectCount, greatCount, missCount,isWin));
+        //EventCenter.Instance.EventTrigger(GameEvents.StopGame);
+        Stop();
+    }
+
+    public void DoDmg(int blood)
+    {
+        bossStats.Modify(-blood / 1f);
+    }
+
+    public void BeDmg(int blood)
+    {
+        playerStats.Modify(blood / 1f);
+    }
     /// <summary>
     /// 开始游戏（包含offset延迟）
     /// </summary>
@@ -898,6 +950,8 @@ public class BeatBar : MonoBehaviour
     /// </summary>
     public void Stop()
     {
+
+        if (!isPlaying) return;
         isPlaying = false;
         isInPreparation = false;
         pausedDuration = 0;
@@ -912,7 +966,7 @@ public class BeatBar : MonoBehaviour
         ResetPosition();
 
         
-        //EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd,new StageEndData(perfectCount,greatCount,missCount));
+        EventCenter.Instance.EventTrigger(GameEvents.OnStageEnd,new StageEndData(perfectCount,greatCount,missCount,isWin));
     }
 
     /// <summary>

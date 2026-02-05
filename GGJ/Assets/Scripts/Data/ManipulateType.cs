@@ -25,13 +25,13 @@ public static class GameConfig
         {
             ActionType.技术回怼, new Dictionary<Category, Dictionary<Quality, Effect>> {
                 { Category.Specific, new Dictionary<Quality, Effect> {
-                    { Quality.Perfect, new Effect(10, 5) },
-                    { Quality.Normal,  new Effect(5, 5) },
+                    { Quality.Perfect, new Effect(5, 5) },
+                    { Quality.Normal,  new Effect(2, 5) },
                     { Quality.Fail,    new Effect(0, 15) }
                 }},
                 { Category.Generic, new Dictionary<Quality, Effect> {
-                    { Quality.Perfect, new Effect(5, 0) },
-                    { Quality.Normal,  new Effect(2, 0) },
+                    { Quality.Perfect, new Effect(2, 0) },
+                    { Quality.Normal,  new Effect(1, 0) },
                     { Quality.Fail,    new Effect(0, 0) }
                 }}
             }
@@ -39,13 +39,13 @@ public static class GameConfig
         {
             ActionType.已读乱回, new Dictionary<Category, Dictionary<Quality, Effect>> {
                 { Category.Specific, new Dictionary<Quality, Effect> {
-                    { Quality.Perfect, new Effect(5, 0) },
-                    { Quality.Normal,  new Effect(3, 0) },
+                    { Quality.Perfect, new Effect(2, 0) },
+                    { Quality.Normal,  new Effect(1, 0) },
                     { Quality.Fail,    new Effect(0, 0) }
                 }},
                 { Category.Generic, new Dictionary<Quality, Effect> {
-                    { Quality.Perfect, new Effect(5, 0) },
-                    { Quality.Normal,  new Effect(2, 0) },
+                    { Quality.Perfect, new Effect(2, 0) },
+                    { Quality.Normal,  new Effect(1, 0) },
                     { Quality.Fail,    new Effect(0, 5) }
                 }}
             }

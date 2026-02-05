@@ -8,12 +8,14 @@ public class StageEndData
     public int PerfectCount;    // Perfect 次数
     public int GreatCount;      // Great 次数
     public int MissCount;       // Miss 次数（包含 Good）
+    public bool IsWin;
 
-    public StageEndData(int perfectCount, int greatCount, int missCount)
+    public StageEndData(int perfectCount, int greatCount, int missCount, bool isWin)
     {
         PerfectCount = perfectCount;
         GreatCount = greatCount;
         MissCount = missCount;
+        IsWin = isWin;
     }
 
     /// <summary>

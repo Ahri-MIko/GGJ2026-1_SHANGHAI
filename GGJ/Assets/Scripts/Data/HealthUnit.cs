@@ -6,7 +6,7 @@ using UnityEngine.EventSystems; // 用于 Action 事件
 public class HealthUnit
 {
     [Header("Settings")]
-    public float maxFace = 600f; // 最大面子值
+    public float maxFace = 100f; // 最大面子值
 
     [Header("Runtime (Read Only)")]
     [SerializeField] private BindableProperty<float> currentFace; // 当前面子值
@@ -64,7 +64,7 @@ public class HealthUnit
         float percent = currentFace.Value / maxFace;
         OnFaceChanged?.Invoke(percent);
         
-        Debug.Log("通知对UI更新02");
+        //Debug.Log("通知对UI更新02");
     }
 
     // 获取当前具体数值（如果需要显示数字）

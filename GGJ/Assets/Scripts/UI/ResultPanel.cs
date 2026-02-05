@@ -31,55 +31,36 @@ public class ResultPanel : BasePanel
     public  void Show(StageEndData data)
     {
         base.Show();
-        
+        SetupResult(data);
         
     }
 
-    public void Show(bool isWin)
-    {
-        base.Show();
-        SetupResult(isWin);
-    }
-    public void SetupResult(bool isWin)
-    {
-        if (isWin)
-        {
-            LoseImage.SetActive(false);
-            SucceedImage.SetActive(true);
-        }
-        else
-        {
-            SucceedImage.SetActive(false);
-            LoseImage.SetActive(true);
-        }
-    }
+    
     public void SetupResult(StageEndData data)
     {
         int total = data.GetTotalCount();
         float ratio = data.GetPerfectRate();
 
-        bool isWin = false; // 判断是否过关
+        //bool isWin = false; // 判断是否过关
 
         // 1. 根据分数设定结局文字和颜色
         if (ratio >= 0.8f)
         {
-            //SetEndingUI("S级：家族传说", "你成为了别人家的小孩！", Color.yellow);
-            isWin = true;
+            SetEndingUI("S级：家族传说", "你成为了别人家的小孩！", Color.yellow);
         }
         else if (ratio >= 0.5f)
         {
-            //SetEndingUI("A级：平平淡淡", "也就是个普通人，明年继续被催。", Color.white);
-            isWin = true;
+            SetEndingUI("A级：平平淡淡", "也就是个普通人，明年继续被催。", Color.white);
         }
         else
         {
-            //SetEndingUI("C级：家族之耻", "聚餐只能坐小孩那桌。", Color.gray);
-            isWin = false; // 失败
+            SetEndingUI("C级：家族之耻", "聚餐只能坐小孩那桌。", Color.gray);
         }
 
-        //perfectCountText.text = $"完美回怼: {data.PerfectCount}";
-        //missCountText.text = $"完美率: {ratio}";
-        if(isWin)
+        perfectCountText.text = $"完美回怼: {data.PerfectCount}";
+        missCountText.text = $"完美率: {ratio:P2}";
+
+        if(data.IsWin)
         {
             LoseImage.SetActive(false);
             SucceedImage.SetActive(true);
